@@ -1,0 +1,154 @@
+name: Flutter Test Pipeline
+on:
+  push:
+    branches:
+      - 'feature/515-testing-strategy'
+  pull_request:
+    branches:
+      - 'feature/515-testing-strategy'
+
+env:
+  MIN_COVERAGE: 80
+  FLUTTER_VERSION: '3.27.1'
+  DART_VERSION: '3.4.3'
+
+jobs:
+  # static_analysis:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: ${{ env.FLUTTER_VERSION }}
+  #         dart-version: ${{ env.DART_VERSION }}
+  #         channel: 'stable'
+  #         cache: true
+  #     - name: Create .env file
+  #       run: |
+  #         touch .env
+  #         echo "API_URL=https://api.example.com" >> .env
+  #     - name: Install dependencies
+  #       run: flutter pub get
+  #     - name: Run analyzer
+  #       run: flutter analyze --no-fatal-warnings
+  #     - name: Check formatting
+  #       run: dart format --set-exit-if-changed .
+
+  unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          dart-version: ${{ env.DART_VERSION }}
+          channel: 'stable'
+      - name: Create .env file
+        run: |
+          touch .env
+          echo "API_URL=https://api.example.com" >> .env
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Run unit tests with coverage
+        run: flutter test --coverage test/unit/
+      - name: Check Coverage Threshold
+        run: |
+          COVERAGE=$(lcov --summary coverage/lcov.info | grep "lines" | cut -d ' ' -f 4 | cut -d '%' -f 1)
+          if (( $(echo "$COVERAGE < ${{ env.MIN_COVERAGE }}" | bc -l) )); then
+            echo "Coverage is $COVERAGE%, which is below the minimum required ${{ env.MIN_COVERAGE }}%"
+            exit 1
+          fi
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/lcov.info
+          fail_ci_if_error: false
+
+  widget_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          dart-version: ${{ env.DART_VERSION }}
+          channel: 'stable'
+      - name: Create .env file
+        run: |
+          touch .env
+          echo "API_URL=https://api.example.com" >> .env
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Run widget tests
+        run: flutter test test/widget/
+        timeout-minutes: 10
+
+  # golden_tests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: ${{ env.FLUTTER_VERSION }}
+  #         dart-version: ${{ env.DART_VERSION }}
+  #         channel: 'stable'
+  #     - name: Create .env file
+  #       run: |
+  #         touch .env
+  #         echo "API_URL=https://api.example.com" >> .env
+  #     - name: Install dependencies
+  #       run: flutter pub get
+  #     - name: Run golden tests
+  #       run: flutter test test/golden/
+  #       timeout-minutes: 5
+  #     - name: Archive golden test failures
+  #       if: failure()
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: golden-test-failures
+  #         path: test/golden/failures/
+  #         retention-days: 5
+
+  performance_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          dart-version: ${{ env.DART_VERSION }}
+          channel: 'stable'
+      - name: Create .env file
+        run: |
+          touch .env
+          echo "API_URL=${{ secrets.API_URL }}" >> .env
+          echo "AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }}" >> .env
+          echo "AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}" >> .env
+          echo "THRYVE_APP_ID=${{ secrets.THRYVE_APP_ID }}" >> .env
+          echo "THRYVE_APP_SECRET=${{ secrets.THRYVE_APP_SECRET }}" >> .env
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Run performance tests
+        run: flutter test --tags="performance"
+        timeout-minutes: 10
+      - name: Check performance thresholds
+        run: |
+          if grep -q "FAILED" test-results.json; then
+            echo "Performance tests failed to meet thresholds"
+            exit 1
+          fi
+
+  # notify:
+  #   needs: [unit_tests, widget_tests, performance_tests]
+  #   runs-on: ubuntu-latest
+  #   if: always()
+  #   steps:
+  #     - name: Send Slack notification
+  #       uses: 8398a7/action-slack@v3
+  #       with:
+  #         status: ${{ job.status }}
+  #         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+  #       env:
+  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #       if: always()
