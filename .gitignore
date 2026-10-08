@@ -46,3 +46,4 @@ app.*.map.json
 
 # Local MCP config (contains API keys)
 *.mcp.json
+.github/mcp.json
