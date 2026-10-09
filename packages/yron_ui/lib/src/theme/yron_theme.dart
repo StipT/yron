@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract final class YronColors {
   static const canvas = Color(0xFF0E0E0E);
+  static const surfaceLow = Color(0xFF121212);
   static const surface = Color(0xFF161618);
   static const elevatedSurface = Color(0xFF1E1E22);
   static const outline = Color(0xFF2E2E32);
@@ -48,6 +49,7 @@ ThemeData buildYronTheme() {
 
   final baseTextTheme = ThemeData.dark().textTheme.apply(
     fontFamily: YronTypography.sansFamily,
+    fontFamilyFallback: const ['packages/yron_ui/Montserrat'],
     bodyColor: YronColors.textPrimary,
     displayColor: YronColors.textPrimary,
   );
@@ -63,6 +65,7 @@ ThemeData buildYronTheme() {
     ),
     labelSmall: baseTextTheme.labelSmall?.copyWith(
       fontFamily: YronTypography.monoFamily,
+      fontFamilyFallback: const ['packages/yron_ui/JetBrains Mono'],
       fontSize: 10,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.8,
@@ -75,6 +78,7 @@ ThemeData buildYronTheme() {
     colorScheme: colorScheme,
     scaffoldBackgroundColor: YronColors.canvas,
     fontFamily: YronTypography.sansFamily,
+    fontFamilyFallback: const ['packages/yron_ui/Montserrat'],
     textTheme: textTheme,
     appBarTheme: AppBarTheme(
       backgroundColor: YronColors.canvas,

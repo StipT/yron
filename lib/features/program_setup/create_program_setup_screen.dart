@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../program_creator/program_draft.dart';
+import '../program_creator/weekly_split_screen.dart';
+
 class CreateProgramSetupScreen extends StatefulWidget {
-  const CreateProgramSetupScreen({super.key});
+  const CreateProgramSetupScreen({super.key, this.onProgramSaved});
+
+  /// Called once after saving the local draft, before returning to app root.
+  final ValueChanged<ProgramDraft>? onProgramSaved;
 
   @override
   State<CreateProgramSetupScreen> createState() =>
@@ -19,19 +25,38 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
   static const _cycleDurations = [8, 10, 12];
 
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController(
+    text: 'HYPERTROPHY OVERLOAD 01',
+  );
+  final _philosophyController = TextEditingController();
   var _selectedFocus = _trainingFocuses.first;
   var _selectedCycleDuration = 10;
 
   void _continueToWeeklySplit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        const SnackBar(
-          content: Text('Weekly split configuration is the next step.'),
+    FocusScope.of(context).unfocus();
+    Navigator.push<void>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => WeeklySplitScreen(
+          draft: ProgramDraft(
+            name: _nameController.text.trim(),
+            philosophy: _philosophyController.text.trim(),
+            focus: _selectedFocus,
+            weeks: _selectedCycleDuration,
+          ),
+          onProgramSaved: widget.onProgramSaved,
         ),
-      );
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _philosophyController.dispose();
+    super.dispose();
   }
 
   @override
@@ -58,7 +83,15 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
         top: false,
         child: Column(
           children: [
-            const _StepProgress(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: YronSpacing.md),
+              child: YronStepIndicator(
+                labels: const ['SETUP', 'WEEKLY SPLIT', 'BUILD'],
+                currentIndex: 0,
+                semanticLabelBuilder: (index, state) =>
+                    'Step ${index + 1} of 3: ${['Setup', 'Weekly split', 'Build'][index]}',
+              ),
+            ),
             Expanded(
               child: Form(
                 key: _formKey,
@@ -94,12 +127,15 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
                     ),
                     const SizedBox(height: YronSpacing.sm),
                     TextFormField(
-                      initialValue: 'HYPERTROPHY OVERLOAD 01',
+                      key: const ValueKey('program-name'),
+                      controller: _nameController,
+                      textInputAction: TextInputAction.next,
                       textCapitalization: TextCapitalization.words,
                       style: textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                       decoration: const InputDecoration(
+                        labelText: 'Program name',
                         suffixIcon: Icon(
                           Icons.check_circle_outline,
                           color: YronColors.primary,
@@ -119,10 +155,13 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
                     ),
                     const SizedBox(height: YronSpacing.sm),
                     TextFormField(
+                      key: const ValueKey('program-philosophy'),
+                      controller: _philosophyController,
                       minLines: 2,
                       maxLines: 3,
                       textCapitalization: TextCapitalization.sentences,
                       decoration: const InputDecoration(
+                        labelText: 'Program philosophy',
                         hintText:
                             'e.g. 5-day push/pull/legs focusing on progressive '
                             'overload and high mechanical tension...',
@@ -202,48 +241,14 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
             YronSpacing.md,
             YronSpacing.md,
           ),
-          child: YronPrimaryButton(
+          child: YronButton(
+            key: const ValueKey('setup-next'),
+            expand: true,
             label: 'NEXT: CONFIGURE WEEKLY SPLIT',
             icon: Icons.arrow_forward,
             onPressed: _continueToWeeklySplit,
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _StepProgress extends StatelessWidget {
-  const _StepProgress();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: YronSpacing.md),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                'STEP 1 OF 3',
-                style: Theme.of(
-                  context,
-                ).textTheme.labelSmall?.copyWith(color: YronColors.primary),
-              ),
-            ],
-          ),
-          const SizedBox(height: YronSpacing.sm),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(2),
-            child: const LinearProgressIndicator(
-              value: 1 / 3,
-              minHeight: 3,
-              backgroundColor: YronColors.outline,
-              color: YronColors.primary,
-            ),
-          ),
-        ],
       ),
     );
   }
