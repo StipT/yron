@@ -99,10 +99,10 @@ class _ActiveProgramScreenState extends State<ActiveProgramScreen> {
                 const SizedBox(height: YronSpacing.md),
                 YronWorkoutRow(
                   title: firstDay == null
-                      ? 'Monday: Push Power'
+                      ? 'Monday: Chest & Triceps'
                       : '${firstDay.name}: ${firstDay.title}',
                   summary: firstDay == null
-                      ? '6 exercises · 18 sets · ~60 min'
+                      ? '4 exercises · 12 sets · ~60 min'
                       : '${firstDay.exercises.length} exercises · '
                             '${firstDay.exercises.fold(0, (n, e) => n + e.sets)} sets',
                   status: const YronBadge(label: 'READY'),
@@ -124,7 +124,7 @@ class _ActiveProgramScreenState extends State<ActiveProgramScreen> {
                   expand: true,
                   onPressed: () => widget.onStartWorkout(
                     firstDay == null
-                        ? WorkoutSample.shoulders
+                        ? WorkoutSample.forSampleDay(0)
                         : WorkoutSample.fromDay(firstDay),
                   ),
                 ),

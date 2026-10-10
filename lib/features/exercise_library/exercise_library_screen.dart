@@ -63,7 +63,8 @@ class ExerciseCatalogView extends StatelessWidget {
       emptyTitle: 'No matching exercises',
       emptyDescription: 'Try a different search or change your filters.',
       detailsTooltip: 'Exercise details',
-      selectedLabel: (count) => '$count exercises selected',
+      selectedLabel: (count) =>
+          '$count ${count == 1 ? 'exercise' : 'exercises'} selected',
       confirmLabel: (count) => 'ADD $count EXERCISES',
       cancelLabel: 'CANCEL',
       selectable: selectable,

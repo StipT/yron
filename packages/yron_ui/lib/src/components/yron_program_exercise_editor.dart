@@ -76,7 +76,7 @@ class YronProgramExerciseEditor extends StatelessWidget {
           const SizedBox(height: YronSpacing.md),
           LayoutBuilder(
             builder: (context, constraints) {
-              final width = constraints.maxWidth < 360
+              final width = constraints.maxWidth < 260
                   ? constraints.maxWidth
                   : (constraints.maxWidth - YronSpacing.sm * 2) / 3;
               return Wrap(

@@ -50,7 +50,9 @@ class YronWorkoutSetRow extends StatelessWidget {
             child: TextFormField(
               initialValue: weight,
               enabled: !completed,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               decoration: InputDecoration(labelText: weightLabel),
               onChanged: onWeightChanged,
               validator: weightValidator,

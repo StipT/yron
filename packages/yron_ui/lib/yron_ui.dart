@@ -19,6 +19,7 @@ export 'src/components/yron_empty_state.dart';
 export 'src/components/yron_exercise_row.dart';
 export 'src/components/yron_info_card.dart';
 export 'src/components/yron_list_card.dart';
+export 'src/components/yron_onboarding_step.dart';
 export 'src/components/yron_personal_best_card.dart';
 export 'src/components/yron_search_field.dart';
 export 'src/components/yron_section_header.dart';
