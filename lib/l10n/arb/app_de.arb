@@ -1,0 +1,470 @@
+{
+  "@@locale": "de",
+  "appTitle": "Iron Progress",
+  "navTracker": "Tracker",
+  "navDashboard": "Dashboard",
+  "navHistory": "Verlauf",
+  "navSettings": "Einstellungen",
+  "localeEnglish": "English",
+  "localeGerman": "Deutsch",
+  "localeCroatian": "Hrvatski",
+  "commonBack": "Zurück",
+  "commonClose": "Schließen",
+  "commonCancel": "ABBRECHEN",
+  "commonDone": "FERTIG",
+  "commonPreview": "VORSCHAU",
+  "commonRequired": "ERFORDERLICH",
+  "commonOptional": "OPTIONAL",
+  "commonAll": "Alle",
+  "commonWorkout": "TRAINING",
+  "commonRest": "PAUSE",
+  "commonAddExercises": "ÜBUNGEN HINZUFÜGEN",
+  "commonBrowseAllExercises": "ALLE ÜBUNGEN ANZEIGEN",
+  "commonExerciseLibrary": "ÜBUNGSBIBLIOTHEK",
+  "commonExerciseLibraryTooltip": "Übungsbibliothek",
+  "commonCreateProgram": "PROGRAMM ERSTELLEN",
+  "commonStartWorkout": "TRAINING STARTEN",
+  "commonUnitLbs": "lbs",
+  "commonWeekAbbreviation": "W",
+  "dayMonday": "Montag",
+  "dayTuesday": "Dienstag",
+  "dayWednesday": "Mittwoch",
+  "dayThursday": "Donnerstag",
+  "dayFriday": "Freitag",
+  "daySaturday": "Samstag",
+  "daySunday": "Sonntag",
+  "dayMondayShort": "MO",
+  "dayTuesdayShort": "DI",
+  "dayWednesdayShort": "MI",
+  "dayThursdayShort": "DO",
+  "dayFridayShort": "FR",
+  "daySaturdayShort": "SA",
+  "daySundayShort": "SO",
+  "stepSetup": "SETUP",
+  "stepWeeklySplit": "WOCHENPLAN",
+  "stepBuild": "AUFBAU",
+  "stepIndicatorSemanticLabel": "Schritt {step} von {total}: {label}",
+  "@stepIndicatorSemanticLabel": {
+    "placeholders": {
+      "step": {"type": "int"},
+      "total": {"type": "int"},
+      "label": {"type": "String"}
+    }
+  },
+  "focusHypertrophy": "HYPERTROPHIE",
+  "focusStrength": "KRAFT",
+  "focusPowerlifting": "POWERLIFTING",
+  "focusBodybuilding": "BODYBUILDING",
+  "workoutTitleChestTriceps": "Brust & Trizeps",
+  "workoutTitleBackBiceps": "Rücken & Bizeps",
+  "workoutTitleRest": "Pause",
+  "workoutTitleLegsAbsQuadFocus": "Beine & Bauch (Quad-Fokus)",
+  "workoutTitleShoulders": "Schultern",
+  "workoutTitleFullBody": "Ganzkörper",
+  "workoutTitleRestRecovery": "Pause & Regeneration",
+  "workoutTitleShouldersArmsHypertrophy": "Schultern & Arme Hypertrophie",
+  "workoutTitleLegsAbs": "Beine & Bauch",
+  "muscleChest": "Brust",
+  "muscleBack": "Rücken",
+  "muscleBiceps": "Bizeps",
+  "muscleTriceps": "Trizeps",
+  "muscleQuads": "Quadrizeps",
+  "muscleAbs": "Bauch",
+  "muscleShoulders": "Schultern",
+  "equipmentBarbell": "Langhantel",
+  "equipmentDumbbell": "Kurzhantel",
+  "equipmentCable": "Kabelzug",
+  "equipmentMachine": "Maschine",
+  "equipmentBodyweight": "Körpergewicht",
+  "difficultyBeginner": "Einsteiger",
+  "difficultyIntermediate": "Mittelstufe",
+  "difficultyAdvanced": "Fortgeschritten",
+  "exerciseBenchPressName": "Langhantel-Bankdrücken",
+  "exerciseBenchPressInstructions": "Stell die Füße fest auf und spann deinen Rumpf an. Senke die Hantel kontrolliert zur Brust und drücke sie wieder hoch, ohne das Becken anzuheben.",
+  "exerciseInclinePressName": "Schrägbankdrücken mit Kurzhanteln",
+  "exerciseInclinePressInstructions": "Stell die Bank auf eine leichte Schräge. Zieh die Schulterblätter zurück und drücke die Hanteln über die obere Brust.",
+  "exerciseCableFlyName": "Kabelzug-Fliegende für die Brust",
+  "exerciseCableFlyInstructions": "Halte die Ellenbogen leicht gebeugt. Führe die Griffe vor der Brust zusammen und geh langsam in die Dehnung zurück.",
+  "exerciseTricepsPushdownName": "Trizepsdrücken am Seil",
+  "exerciseTricepsPushdownInstructions": "Halte die Ellenbogen eng am Körper. Strecke die Arme nach unten und trenne die Seilenden, ohne die Schultern mitzunehmen.",
+  "exerciseLatPulldownName": "Latzug",
+  "exerciseLatPulldownInstructions": "Spann den Oberkörper an und zieh die Stange zur oberen Brust. Führe die Bewegung mit den Ellenbogen und kontrolliere den Rückweg.",
+  "exerciseBarbellRowName": "Vorgebeugtes Langhantelrudern",
+  "exerciseBarbellRowInstructions": "Beug dich aus der Hüfte mit neutraler Wirbelsäule vor. Zieh die Hantel zu den unteren Rippen, ohne den Oberkörper zu schwingen.",
+  "exerciseBicepsCurlName": "Kurzhantel-Bizepscurls",
+  "exerciseBicepsCurlInstructions": "Lass die Oberarme ruhig. Curl die Hanteln zur Schulter und senke sie kontrolliert wieder ab.",
+  "exerciseSquatName": "Langhantel-Kniebeuge",
+  "exerciseSquatInstructions": "Spann dich vor jeder Wiederholung an. Beug Hüfte und Knie bis zu einer sauberen Tiefe und drück dich über den ganzen Fuß wieder hoch.",
+  "exerciseLegExtensionName": "Beinstrecker",
+  "exerciseLegExtensionInstructions": "Richte die Knie an der Achse des Geräts aus. Strecke die Beine ohne hartes Durchdrücken und senke das Gewicht langsam ab.",
+  "exercisePlankName": "Plank",
+  "exercisePlankInstructions": "Halte die Ellenbogen unter den Schultern und den Körper in einer Linie. Spann die Körpermitte an und atme ruhig weiter. Bei dieser Zeitübung werden die Sekunden im Wiederholungsfeld erfasst.",
+  "exerciseOverheadPressName": "Stehendes Langhantel-Schulterdrücken",
+  "exerciseOverheadPressInstructions": "Spann den Rumpf an und halte die Rippen unten. Drücke die Hantel über Kopf, ohne ins Hohlkreuz zu fallen, und führe sie zur Schulterhöhe zurück.",
+  "exerciseLateralRaiseName": "Kurzhantel-Seitheben",
+  "exerciseLateralRaiseInstructions": "Heb die Arme mit leicht gebeugten Ellenbogen bis auf Schulterhöhe. Arbeite kontrolliert und vermeide Schwung oder Schulterzucken.",
+  "exerciseFacePullName": "Face Pull am Kabel",
+  "exerciseFacePullInstructions": "Zieh das Seil mit hohen Ellenbogen Richtung Stirn. Halte den Oberkörper ruhig und zieh die Schulterblätter sanft zusammen.",
+  "exerciseSeatedDumbbellPressName": "Sitzendes Kurzhantel-Schulterdrücken",
+  "exerciseCableTricepsPushdownName": "Trizepsdrücken am Kabel",
+  "exerciseCableCrunchName": "Cable Crunch",
+  "exerciseDeadliftName": "Kreuzheben",
+  "exerciseBarbellSquatName": "Langhantel-Kniebeuge",
+  "exerciseLibraryTitle": "ÜBUNGSBIBLIOTHEK",
+  "exercisePickerSearchLabel": "Übungen suchen",
+  "exercisePickerClearTooltip": "Suche löschen",
+  "exercisePickerMuscleLabel": "MUSKELGRUPPE",
+  "exercisePickerEquipmentLabel": "Gerät",
+  "exercisePickerDifficultyLabel": "Niveau",
+  "exercisePickerEmptyTitle": "Keine passenden Übungen",
+  "exercisePickerEmptyDescription": "Versuch es mit einer anderen Suche oder passe die Filter an.",
+  "exercisePickerDetailsTooltip": "Übungsdetails",
+  "exercisePickerSelectedLabel": "{count, plural, one{# Übung ausgewählt} other{# Übungen ausgewählt}}",
+  "@exercisePickerSelectedLabel": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "exercisePickerConfirmLabel": "{count} ÜBUNGEN HINZUFÜGEN",
+  "@exercisePickerConfirmLabel": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "exerciseDetailsTechniqueLabel": "TECHNIK",
+  "exerciseDetailsInfoTitle": "JEDE WIEDERHOLUNG KONTROLLIEREN",
+  "exerciseDetailsInfoDescription": "Wähle ein Gewicht, mit dem du sauber trainieren kannst. Bei Schmerzen stoppen und dir bei Bedarf von einem qualifizierten Coach helfen lassen.",
+  "exercisePickerTitle": "ÜBUNGEN AUSWÄHLEN",
+  "exercisePickerCancelTooltip": "Übungsauswahl abbrechen",
+  "exercisePickerAddToDay": "Übungen zu {dayName} hinzufügen",
+  "@exercisePickerAddToDay": {
+    "placeholders": {"dayName": {"type": "String"}}
+  },
+  "exercisePickerAddToDayTitle": "Übungen zu {dayName} hinzufügen",
+  "@exercisePickerAddToDayTitle": {
+    "placeholders": {"dayName": {"type": "String"}}
+  },
+  "dashboardTitle": "FORTSCHRITT",
+  "dashboardTotalVolumeLabel": "Gesamtvolumen",
+  "dashboardWorkoutsLabel": "Workouts",
+  "dashboardThisMonthLabel": "Diesen Monat",
+  "dashboardStrengthGainsTitle": "KRAFTZUWÄCHSE",
+  "dashboardTrendBarbellSquatName": "LANGHANTEL-KNIEBEUGE",
+  "dashboardTrendBarbellSquatGain": "+15 lbs",
+  "dashboardTrendBenchPressName": "BANKDRÜCKEN",
+  "dashboardTrendBenchPressGain": "+5 lbs",
+  "dashboardTrendChartSemanticLabel": "{exercise} über fünf Wochen",
+  "@dashboardTrendChartSemanticLabel": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dashboardTrendChartEmptyLabel": "Keine Daten",
+  "dashboardTrendPointSemanticLabel": "Woche {week}: {value} lbs",
+  "@dashboardTrendPointSemanticLabel": {
+    "placeholders": {
+      "week": {"type": "int"},
+      "value": {"type": "String"}
+    }
+  },
+  "dashboardPersonalBestsTitle": "PERSÖNLICHE BESTWERTE",
+  "dashboardPersonalBestLabel": "1RM",
+  "dashboardPersonalBestDeadlift": "KREUZHEBEN",
+  "dashboardPersonalBestSquat": "KNIEBEUGE",
+  "dashboardPersonalBestBench": "BANK",
+  "dashboardPersonalBestOhp": "OHP",
+  "dashboardSampleDisclaimer": "Beispielhafte Fortschrittsdaten. Protokollierte Einheiten bleiben nur in dieser App-Sitzung gespeichert.",
+  "historyTitle": "VERLAUF",
+  "historySectionTitle": "TRAININGSVERLAUF",
+  "historySectionSubtitle": "Lokale Einheiten · wird beim Neustart der App zurückgesetzt",
+  "historyEmptyTitle": "Noch keine Einheiten protokolliert",
+  "historyEmptyDescription": "Beende ein Workout im Tracker, um es hier zu sehen.",
+  "historySessionSummary": "{sets, plural, one{# Satz} other{# Sätze}} · {volume} lbs",
+  "@historySessionSummary": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "volume": {"type": "String"}
+    }
+  },
+  "historyCompleteBadge": "ABGESCHLOSSEN",
+  "createProgramTitle": "PROGRAMM ERSTELLEN",
+  "setupDefaultProgramName": "HYPERTROPHIE OVERLOAD 01",
+  "setupPhaseLabel": "PHASE 01  /  ARCHITEKT",
+  "setupScreenTitle": "1. PROGRAMM-SETUP",
+  "setupScreenDescription": "Gib deinem Plan einen Namen und leg die Parameter für den Trainingszyklus fest.",
+  "setupProgramNameSection": "PROGRAMMNAME",
+  "setupProgramNameFieldLabel": "Programmname",
+  "setupProgramNameRequiredError": "Gib einen Programmnamen ein, um fortzufahren.",
+  "setupProgramPhilosophySection": "PROGRAMMPHILOSOPHIE",
+  "setupProgramPhilosophyFieldLabel": "Programmphilosophie",
+  "setupProgramPhilosophyHint": "z. B. 5-Tage Push/Pull/Legs mit Fokus auf progressive Überlastung und hohe mechanische Spannung...",
+  "setupTrainingFocusSection": "TRAININGSSCHWERPUNKT",
+  "setupCycleDurationSection": "ZYKLUSDAUER",
+  "setupCycleDurationRecommended": "EMPFOHLEN: 10 WOCHEN",
+  "setupCycleDurationOption": "{weeks} WOCHEN",
+  "@setupCycleDurationOption": {
+    "placeholders": {"weeks": {"type": "int"}}
+  },
+  "setupInfoTitle": "ZYKLUS-SYNCHRONISIERUNG",
+  "setupInfoDescription": "Dieser Wochenplan wiederholt sich über alle Wochen des Zyklus. Progressive Überlastung und Gewichtssteigerungen können pro Block neu abgestimmt werden.",
+  "setupNextButton": "WEITER: WOCHENPLAN KONFIGURIEREN",
+  "weeklySplitPhaseLabel": "PHASE 02 / STRUKTUR",
+  "weeklySplitScreenTitle": "2. WOCHENPLAN",
+  "weeklySplitSummary": "{name} · {focus} · {weeks} Wochen",
+  "@weeklySplitSummary": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "focus": {"type": "String"},
+      "weeks": {"type": "int"}
+    }
+  },
+  "weeklySplitDescription": "Lege Trainingstage und Regenerationstage fest. Bearbeite ein Workout, um den Übungsplan aufzubauen.",
+  "weeklySplitScheduleLabel": "WOCHENPLAN",
+  "weeklySplitWorkoutDaysBadge": "{count} TRAININGSTAGE",
+  "@weeklySplitWorkoutDaysBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "weeklySplitEditDayTooltip": "{dayName} bearbeiten",
+  "@weeklySplitEditDayTooltip": {
+    "placeholders": {"dayName": {"type": "String"}}
+  },
+  "weeklySplitInfoTitle": "DEIN WIEDERHOLTER MIKROZYKLUS",
+  "weeklySplitInfoDescription": "Dieser Sieben-Tage-Plan wiederholt sich in jeder Woche deines Programms. Übungen an Pausentagen bleiben erhalten, wenn du sie wieder zu Trainingstagen machst.",
+  "weeklySplitNextButton": "WEITER: WORKOUTS AUFBAUEN",
+  "dayBuilderTitle": "WORKOUT-EDITOR",
+  "dayBuilderPreviewTitle": "WORKOUT-VORSCHAU",
+  "dayBuilderBackToBuilderButton": "ZURÜCK ZUM EDITOR",
+  "dayBuilderPreviewRestDescription": "Regenerationstag. Keine Übungen geplant.",
+  "dayBuilderPreviewEmptyDescription": "Füge Übungen hinzu, um dieses Workout aufzubauen.",
+  "dayBuilderAddExerciseOrRestError": "Füge eine Übung hinzu oder markiere den Tag als Pause.",
+  "dayBuilderEveryWorkoutNeedsExerciseError": "Jeder Trainingstag braucht mindestens eine Übung.",
+  "dayBuilderRestRecoveryTitle": "Pause & Regeneration",
+  "dayBuilderRestRecoveryDescription": "Für diesen Tag ist kein Workout geplant. Sobald du eine Übung hinzufügst, wird daraus ein Trainingstag.",
+  "dayBuilderBuildWorkoutButton": "WORKOUT AUFBAUEN",
+  "dayBuilderWorkoutNameLabel": "Workout-Name",
+  "dayBuilderWorkoutNameRequiredError": "Gib einen Workout-Namen ein.",
+  "dayBuilderExercisePrescriptionsLabel": "ÜBUNGSVORGABEN",
+  "dayBuilderExerciseCount": "{count} ÜBUNGEN",
+  "@dayBuilderExerciseCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "dayBuilderEmptyTitle": "Baue deine erste Übung ein",
+  "dayBuilderEmptyDescription": "Füge unten Übungen hinzu und lege dann Sätze, Wiederholungen und Pausen fest.",
+  "dayBuilderSetsLabel": "Sätze",
+  "dayBuilderRepsLabel": "Wdh.",
+  "dayBuilderHoldSecondsLabel": "Halten (Sek.)",
+  "dayBuilderRestSecondsLabel": "Pause (Sek.)",
+  "dayBuilderRangeError": "{min}–{max} eingeben.",
+  "@dayBuilderRangeError": {
+    "placeholders": {
+      "min": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "dayBuilderDeleteTooltip": "{exercise} löschen",
+  "@dayBuilderDeleteTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderMoveUpTooltip": "{exercise} nach oben",
+  "@dayBuilderMoveUpTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderMoveDownTooltip": "{exercise} nach unten",
+  "@dayBuilderMoveDownTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderDetailsTooltip": "Details: {exercise}",
+  "@dayBuilderDetailsTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderDragTooltip": "Zum Umordnen ziehen",
+  "dayBuilderSaveAndReturnButton": "TAG SPEICHERN & ZURÜCK",
+  "dayBuilderContinueButton": "WEITER: PROGRAMM PRÜFEN",
+  "programExercisePrescriptionReps": "{sets, plural, one{# Satz} other{# Sätze}} × {reps} Wdh. · {restSeconds}s Pause",
+  "@programExercisePrescriptionReps": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "reps": {"type": "int"},
+      "restSeconds": {"type": "int"}
+    }
+  },
+  "programExercisePrescriptionHold": "{sets, plural, one{# Satz} other{# Sätze}} × {reps} Sek. halten · {restSeconds}s Pause",
+  "@programExercisePrescriptionHold": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "reps": {"type": "int"},
+      "restSeconds": {"type": "int"}
+    }
+  },
+  "programCreatorTitle": "PROGRAMM-ERSTELLER",
+  "programCreatorReadyLabel": "BEREIT FÜR DAS TRAINING",
+  "programCreatorWeeksBadge": "{count} WOCHEN",
+  "@programCreatorWeeksBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "programCreatorDaysPerWeekBadge": "{count} TAGE / WOCHE",
+  "@programCreatorDaysPerWeekBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "programCreatorSetsPerWeekBadge": "{count} SÄTZE / WOCHE",
+  "@programCreatorSetsPerWeekBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "programCreatorScheduleTitle": "WOCHENPLAN",
+  "programCreatorScheduleSubtitle": "Klappe einen Tag auf, um die Übungsvorgaben zu prüfen.",
+  "programCreatorRecoveryDayDescription": "Regenerationstag. Erhol dich, tanke auf und bereite dich auf dein nächstes Workout vor.",
+  "programCreatorNoExercisesYet": "Noch keine Übungen. Bearbeite dieses Workout.",
+  "programCreatorEditDayButton": "{day} BEARBEITEN",
+  "@programCreatorEditDayButton": {
+    "placeholders": {"day": {"type": "String"}}
+  },
+  "programCreatorInfoTitle": "DEIN PROGRAMM IST BEREIT",
+  "programCreatorInfoDescription": "Speichere dieses Beispielprogramm, um zur Übersicht zurückzukehren. Dieser Entwurf bleibt nur für diese Sitzung lokal gespeichert.",
+  "programCreatorIncompleteWarning": "Füge jedem Trainingstag mindestens eine Übung hinzu, bevor du speicherst.",
+  "programCreatorSaveButton": "PROGRAMM SPEICHERN",
+  "settingsTitle": "EINSTELLUNGEN",
+  "settingsInfoTitle": "IRON PROGRESS · BEISPIELMODUS",
+  "settingsInfoDescription": "Programme, Übungsvorgaben und Trainingsprotokolle nutzen lokale Beispieldaten. Es ist kein Konto und kein Backend verbunden.",
+  "settingsLanguageTitle": "SPRACHE",
+  "settingsLanguageSubtitle": "Wähle aus, in welcher Sprache die App angezeigt wird.",
+  "settingsDisplayTitle": "ANZEIGE & EINHEITEN",
+  "settingsDisplaySubtitle": "Dunkles Design · Pfund (lbs) · Montserrat / JetBrains Mono",
+  "templateCategoryHypertrophy": "Hypertrophie",
+  "templateCategoryStrength": "Kraft",
+  "templateCategoryVolume": "Volumen",
+  "templatePushPullLegsName": "Push Pull Legs",
+  "templatePushPullLegsDescription": "5 Tage mit hoher Frequenz und Intensität",
+  "templateUpperLowerName": "Upper Lower",
+  "templateUpperLowerDescription": "4-Tage-Power-Grundlage",
+  "templateArnoldSplitName": "Arnold Split",
+  "templateArnoldSplitDescription": "6-Tage-Antagonisten-Fokus",
+  "templateDayPush": "Push",
+  "templateDayPull": "Pull",
+  "templateDayLegs": "Beine",
+  "templateDayUpper": "Oberkörper",
+  "templateDayLower": "Unterkörper",
+  "templateDayChestBack": "Brust & Rücken",
+  "templateDayShouldersArms": "Schultern & Arme",
+  "templateDayArms": "Arme",
+  "trackerEmptyAppBarTitle": "IRON PULSE",
+  "trackerEmptySystemReadyBadge": "SYS READY",
+  "trackerEmptyNoProgramTitle": "KEIN AKTIVES PROGRAMM",
+  "trackerEmptyNoProgramDescription": "Du brauchst eine aktive Routine, um Workouts zu protokollieren, progressive Überlastung zu verfolgen und Muskulatur aufzubauen. Wähle eine Vorlage oder erstelle deinen Split komplett selbst.",
+  "trackerEmptyCreateProgramButton": "TRAININGSPROGRAMM ERSTELLEN",
+  "trackerEmptyPresetTitle": "ODER MIT EINER VORLAGE STARTEN",
+  "trackerEmptyPresetSubtitle": "3 PROTOKOLLE",
+  "trackerEmptyPreviewButton": "VORSCHAU",
+  "trackerEmptyStartSampleProgramButton": "BEISPIELPROGRAMM STARTEN",
+  "trackerEmptyTemplateDayLabel": "TAG {day}",
+  "@trackerEmptyTemplateDayLabel": {
+    "placeholders": {"day": {"type": "int"}}
+  },
+  "trackerEmptyHowItWorksTitle": "SO FUNKTIONIERT YRON",
+  "trackerEmptyHowItWorksSubtitle": "Baue ein wiederholbares Trainingssystem auf.",
+  "trackerEmptyStepOne": "Wöchentlichen Muskel-Split festlegen",
+  "trackerEmptyStepTwo": "Sätze & Zielwiederholungen ergänzen",
+  "trackerEmptyStepThree": "Gewichte & Überlastung protokollieren",
+  "trackerEmptyFooter": "Beispielmodus · Programme und Protokolle bleiben nur in dieser Sitzung lokal gespeichert.",
+  "weekDaysTitle": "TRAININGSTAG WÄHLEN",
+  "weekDaysSampleSubtitle": "HYPERTROPHIE OVERLOAD 1.0 · WOCHE {week} ({start} – {end})",
+  "@weekDaysSampleSubtitle": {
+    "placeholders": {
+      "week": {"type": "int"},
+      "start": {"type": "String"},
+      "end": {"type": "String"}
+    }
+  },
+  "weekDaysDescription": "Protokolliere deine Sätze und vergleiche sie mit früheren Bestwerten, um weiter Fortschritte zu machen.",
+  "weekDaysProgressSummary": "3 VON 5 ABGESCHLOSSEN · 1 AUSGELASSEN",
+  "weekDaysProgressSemanticLabel": "Fortschritt der Trainingswoche",
+  "weekDaysProgressSemanticValue": "60 Prozent",
+  "weekDaysCompletedMetricsVolume": "4 Übungen · 14.200 KG Volumen",
+  "weekDaysCompletedMetricsLogged": "4 Übungen protokolliert",
+  "weekDaysCompletedStatus": "ABGESCHLOSSEN",
+  "weekDaysRecoveryStatus": "REGENERATION",
+  "weekDaysSkippedStatus": "AUSGELASSEN",
+  "weekDaysTodayReadyStatus": "HEUTE · BEREIT",
+  "weekDaysUpcomingStatus": "KOMMT ALS NÄCHSTES",
+  "weekDaysPlannedStatus": "GEPLANT",
+  "weekDaysRestDescription": "Regeneration gehört zum Plan. Wähle einen Trainingstag, sobald du wieder bereit bist.",
+  "weekDaysWorkoutDescription": "Schau dir die Übungen an und protokolliere jeden Satz im Session-Logger.",
+  "weekDaysStartSelectedWorkoutButton": "AUSGEWÄHLTES WORKOUT STARTEN",
+  "weekDaysBackToProgramButton": "ZURÜCK ZUM PROGRAMM",
+  "weekDaysProgramFooter": "Workout-Zuweisungen aus deinem lokalen Programmentwurf.",
+  "activeProgramTitle": "TRACKER",
+  "activeProgramSampleBadge": "AKTIVES PROGRAMM · BEISPIELMODUS",
+  "activeProgramSampleName": "HYPERTROPHIE PHASE II",
+  "activeProgramSampleDesignerSubtitle": "Programmdesigner · Iron Coaching",
+  "activeProgramCustomDesignerSubtitle": "Programmdesigner · Du · {focus}",
+  "@activeProgramCustomDesignerSubtitle": {
+    "placeholders": {"focus": {"type": "String"}}
+  },
+  "activeProgramPreviousWeekTooltip": "Vorherige Woche",
+  "activeProgramNextWeekTooltip": "Nächste Woche",
+  "activeProgramWeekLabel": "WOCHE {current} VON {total}",
+  "@activeProgramWeekLabel": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "activeProgramTodayTitle": "HEUTIGES WORKOUT",
+  "activeProgramTodaySubtitle": "Tag 1 von {count}",
+  "@activeProgramTodaySubtitle": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "activeProgramSampleWorkoutSummary": "4 Übungen · 12 Sätze · ~60 Min",
+  "activeProgramWorkoutSummary": "{exercises} Übungen · {sets} Sätze",
+  "@activeProgramWorkoutSummary": {
+    "placeholders": {
+      "exercises": {"type": "int"},
+      "sets": {"type": "int"}
+    }
+  },
+  "activeProgramReadyBadge": "BEREIT",
+  "activeProgramInfoTitle": "PROGRESSIVE ÜBERLASTUNG",
+  "activeProgramInfoDescription": "Ziel-RPE 8,5. Schau dir deine letzte Einheit an, bevor du Gewicht draufpackst. Beispielhafte Steigerung: +2,5 lbs.",
+  "activeProgramChooseDayButton": "WOCHE ANZEIGEN & TAG WÄHLEN",
+  "activeProgramCreateNewProgramButton": "NEUES PROGRAMM ERSTELLEN",
+  "activeWorkoutTitle": "AKTIVES WORKOUT",
+  "activeWorkoutSessionBadge": "LIVE SESSION · LOKALES BEISPIEL",
+  "activeWorkoutCompleteOneSetError": "Schließe mindestens einen Satz ab, um zu beenden.",
+  "activeWorkoutFinishDialogTitle": "Dieses Workout beenden?",
+  "activeWorkoutFinishDialogDescription": "{completed} von {total} Sätzen abgeschlossen. Nur abgeschlossene Sätze erscheinen im lokalen Verlauf.",
+  "@activeWorkoutFinishDialogDescription": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "activeWorkoutKeepTrainingButton": "WEITERTRAINIEREN",
+  "activeWorkoutFinishButton": "WORKOUT BEENDEN",
+  "activeWorkoutDiscardDialogTitle": "Workout verwerfen?",
+  "activeWorkoutDiscardDialogDescription": "Deine unfertige Beispiel-Session wird nicht gespeichert.",
+  "activeWorkoutDiscardButton": "VERWERFEN",
+  "activeWorkoutVolumeLabel": "VOLUMEN",
+  "activeWorkoutSetProgress": "{completed} / {total} Sätze",
+  "@activeWorkoutSetProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "activeWorkoutRestTimerLabel": "PAUSENTIMER",
+  "activeWorkoutPauseButton": "PAUSE",
+  "activeWorkoutStartButton": "START",
+  "activeWorkoutInfoTitle": "PROGRESSION · ZIEL-RPE 8,5",
+  "activeWorkoutInfoDescription": "Letzte Beispiel-Session: 9 Sätze / 10.500 lbs. Arbeite mit sauberen Wiederholungen. Erwäge +2,5 lbs in der nächsten Einheit nur dann, wenn Technik und Anstrengung passen.",
+  "activeWorkoutSessionRpeLabel": "SESSION-RPE",
+  "activeWorkoutExerciseSubtitle": "{sets} Sätze · {reps} Wdh. · {restSeconds}s Pause",
+  "@activeWorkoutExerciseSubtitle": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "reps": {"type": "int"},
+      "restSeconds": {"type": "int"}
+    }
+  },
+  "activeWorkoutSetCompleteLabel": "{exercise} Satz {set} abgeschlossen",
+  "@activeWorkoutSetCompleteLabel": {
+    "placeholders": {
+      "exercise": {"type": "String"},
+      "set": {"type": "int"}
+    }
+  },
+  "activeWorkoutUndoExerciseButton": "ÜBUNG RÜCKGÄNGIG",
+  "activeWorkoutCompleteExerciseButton": "ÜBUNG ABSCHLIESSEN"
+}

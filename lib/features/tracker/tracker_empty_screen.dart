@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
+
 class TrackerEmptyScreen extends StatelessWidget {
   const TrackerEmptyScreen({
     super.key,
@@ -13,39 +15,59 @@ class TrackerEmptyScreen extends StatelessWidget {
   final VoidCallback onStartSample;
   final VoidCallback onLibrary;
 
-  static const _templates = [
-    _ProgramTemplate(
-      name: 'Push Pull Legs',
-      category: 'Hypertrophy',
-      description: '5-Day High Intensity Frequency',
-      color: YronColors.primary,
-      days: ['Push', 'Pull', 'Legs', 'Rest', 'Upper', 'Rest', 'Rest'],
-    ),
-    _ProgramTemplate(
-      name: 'Upper Lower',
-      category: 'Strength',
-      description: '4-Day Pure Power Foundation',
-      color: YronColors.secondary,
-      days: ['Upper', 'Lower', 'Rest', 'Upper', 'Lower', 'Rest', 'Rest'],
-    ),
-    _ProgramTemplate(
-      name: 'Arnold Split',
-      category: 'Volume',
-      description: '6-Day Antagonist Muscle Blast',
-      color: YronColors.textMuted,
-      days: [
-        'Chest & Back',
-        'Shoulders & Arms',
-        'Legs',
-        'Chest & Back',
-        'Arms',
-        'Legs',
-        'Rest',
-      ],
-    ),
-  ];
+  List<_ProgramTemplate> _buildTemplates(BuildContext context) {
+    final l10n = context.l10n;
+    return [
+      _ProgramTemplate(
+        name: l10n.templatePushPullLegsName,
+        category: l10n.templateCategoryHypertrophy,
+        description: l10n.templatePushPullLegsDescription,
+        color: YronColors.primary,
+        days: [
+          _TemplateDay(label: l10n.templateDayPush),
+          _TemplateDay(label: l10n.templateDayPull),
+          _TemplateDay(label: l10n.templateDayLegs),
+          _TemplateDay(label: l10n.commonRest, isRest: true),
+          _TemplateDay(label: l10n.templateDayUpper),
+          _TemplateDay(label: l10n.commonRest, isRest: true),
+          _TemplateDay(label: l10n.commonRest, isRest: true),
+        ],
+      ),
+      _ProgramTemplate(
+        name: l10n.templateUpperLowerName,
+        category: l10n.templateCategoryStrength,
+        description: l10n.templateUpperLowerDescription,
+        color: YronColors.secondary,
+        days: [
+          _TemplateDay(label: l10n.templateDayUpper),
+          _TemplateDay(label: l10n.templateDayLower),
+          _TemplateDay(label: l10n.commonRest, isRest: true),
+          _TemplateDay(label: l10n.templateDayUpper),
+          _TemplateDay(label: l10n.templateDayLower),
+          _TemplateDay(label: l10n.commonRest, isRest: true),
+          _TemplateDay(label: l10n.commonRest, isRest: true),
+        ],
+      ),
+      _ProgramTemplate(
+        name: l10n.templateArnoldSplitName,
+        category: l10n.templateCategoryVolume,
+        description: l10n.templateArnoldSplitDescription,
+        color: YronColors.textMuted,
+        days: [
+          _TemplateDay(label: l10n.templateDayChestBack),
+          _TemplateDay(label: l10n.templateDayShouldersArms),
+          _TemplateDay(label: l10n.templateDayLegs),
+          _TemplateDay(label: l10n.templateDayChestBack),
+          _TemplateDay(label: l10n.templateDayArms),
+          _TemplateDay(label: l10n.templateDayLegs),
+          _TemplateDay(label: l10n.commonRest, isRest: true),
+        ],
+      ),
+    ];
+  }
 
   void _previewTemplate(BuildContext context, _ProgramTemplate template) {
+    final l10n = context.l10n;
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -55,12 +77,12 @@ class TrackerEmptyScreen extends StatelessWidget {
         subtitle: '${template.category} · ${template.description}',
         actions: [
           YronButton(
-            label: 'CANCEL',
+            label: l10n.commonCancel,
             variant: YronButtonVariant.quiet,
             onPressed: () => Navigator.pop(sheetContext),
           ),
           YronButton(
-            label: 'START SAMPLE PROGRAM',
+            label: l10n.trackerEmptyStartSampleProgramButton,
             icon: Icons.play_arrow,
             onPressed: () {
               Navigator.pop(sheetContext);
@@ -74,14 +96,14 @@ class TrackerEmptyScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: YronSpacing.sm),
                 child: YronWorkoutRow(
-                  title: 'DAY ${index + 1}',
-                  summary: day,
-                  icon: day == 'Rest'
+                  title: l10n.trackerEmptyTemplateDayLabel(index + 1),
+                  summary: day.label,
+                  icon: day.isRest
                       ? Icons.self_improvement
                       : Icons.fitness_center,
-                  status: day == 'Rest'
-                      ? const YronBadge(
-                          label: 'RECOVERY',
+                  status: day.isRest
+                      ? YronBadge(
+                          label: l10n.weekDaysRecoveryStatus,
                           color: YronColors.secondary,
                         )
                       : null,
@@ -95,19 +117,21 @@ class TrackerEmptyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final templates = _buildTemplates(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.fitness_center, color: YronColors.primary),
-            SizedBox(width: YronSpacing.sm),
-            Text('IRON PULSE'),
+            const Icon(Icons.fitness_center, color: YronColors.primary),
+            const SizedBox(width: YronSpacing.sm),
+            Text(l10n.trackerEmptyAppBarTitle),
           ],
         ),
         actions: [
           IconButton(
-            tooltip: 'Exercise library',
+            tooltip: l10n.commonExerciseLibraryTooltip,
             onPressed: onLibrary,
             icon: const Icon(Icons.menu_book_outlined),
           ),
@@ -141,13 +165,16 @@ class TrackerEmptyScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: YronSpacing.md),
-                      const YronBadge(label: 'SYS READY', icon: Icons.circle),
+                      YronBadge(
+                        label: l10n.trackerEmptySystemReadyBadge,
+                        icon: Icons.circle,
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(height: YronSpacing.lg),
                 Text(
-                  'NO ACTIVE PROGRAM',
+                  l10n.trackerEmptyNoProgramTitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: YronColors.primary,
@@ -155,28 +182,29 @@ class TrackerEmptyScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: YronSpacing.sm),
-                const Text(
-                  'You need an active routine to log workouts, track '
-                  'progressive overload, and build muscle. Choose a template '
-                  'or build your custom split from scratch.',
+                Text(
+                  l10n.trackerEmptyNoProgramDescription,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: YronColors.textMuted, height: 1.5),
+                  style: const TextStyle(
+                    color: YronColors.textMuted,
+                    height: 1.5,
+                  ),
                 ),
                 const SizedBox(height: YronSpacing.lg),
                 YronButton(
                   key: const ValueKey('create-program'),
-                  label: 'CREATE WORKOUT PROGRAM',
+                  label: l10n.trackerEmptyCreateProgramButton,
                   icon: Icons.arrow_forward,
                   expand: true,
                   onPressed: onCreateProgram,
                 ),
                 const SizedBox(height: YronSpacing.xl),
-                const YronSectionHeader(
-                  title: 'OR START FROM A PRESET',
-                  subtitle: '3 PROTOCOLS',
+                YronSectionHeader(
+                  title: l10n.trackerEmptyPresetTitle,
+                  subtitle: l10n.trackerEmptyPresetSubtitle,
                 ),
                 const SizedBox(height: YronSpacing.md),
-                for (final template in _templates)
+                for (final template in templates)
                   Padding(
                     padding: const EdgeInsets.only(bottom: YronSpacing.sm),
                     child: YronCard(
@@ -237,7 +265,7 @@ class TrackerEmptyScreen extends StatelessWidget {
                                       key: ValueKey(
                                         'template-preview-${template.name}',
                                       ),
-                                      label: 'PREVIEW',
+                                      label: l10n.trackerEmptyPreviewButton,
                                       variant: YronButtonVariant.secondary,
                                       onPressed: () =>
                                           _previewTemplate(context, template),
@@ -252,36 +280,36 @@ class TrackerEmptyScreen extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(height: YronSpacing.lg),
-                const YronCard(
+                YronCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       YronSectionHeader(
-                        title: 'HOW YRON WORKS',
-                        subtitle: 'Build a repeatable training system.',
+                        title: l10n.trackerEmptyHowItWorksTitle,
+                        subtitle: l10n.trackerEmptyHowItWorksSubtitle,
                       ),
-                      SizedBox(height: YronSpacing.md),
+                      const SizedBox(height: YronSpacing.md),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: YronOnboardingStep(
                               number: '01',
-                              label: 'Set weekly muscle split',
+                              label: l10n.trackerEmptyStepOne,
                             ),
                           ),
-                          SizedBox(width: YronSpacing.sm),
+                          const SizedBox(width: YronSpacing.sm),
                           Expanded(
                             child: YronOnboardingStep(
                               number: '02',
-                              label: 'Add sets & target reps',
+                              label: l10n.trackerEmptyStepTwo,
                             ),
                           ),
-                          SizedBox(width: YronSpacing.sm),
+                          const SizedBox(width: YronSpacing.sm),
                           Expanded(
                             child: YronOnboardingStep(
                               number: '03',
-                              label: 'Log weights & overload',
+                              label: l10n.trackerEmptyStepThree,
                             ),
                           ),
                         ],
@@ -290,10 +318,10 @@ class TrackerEmptyScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: YronSpacing.md),
-                const Text(
-                  'Sample mode · programs and logs are local to this session.',
+                Text(
+                  l10n.trackerEmptyFooter,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: YronColors.textMuted),
+                  style: const TextStyle(color: YronColors.textMuted),
                 ),
               ],
             ),
@@ -317,5 +345,12 @@ class _ProgramTemplate {
   final String category;
   final String description;
   final Color color;
-  final List<String> days;
+  final List<_TemplateDay> days;
+}
+
+class _TemplateDay {
+  const _TemplateDay({required this.label, this.isRest = false});
+
+  final String label;
+  final bool isRest;
 }

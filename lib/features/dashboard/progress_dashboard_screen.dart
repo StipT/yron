@@ -1,14 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
+
 class ProgressDashboardScreen extends StatelessWidget {
   const ProgressDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final trends = [
+      (
+        name: l10n.dashboardTrendBarbellSquatName,
+        gain: l10n.dashboardTrendBarbellSquatGain,
+        values: [280.0, 282.5, 287.5, 290.0, 295.0],
+        color: YronColors.primary,
+      ),
+      (
+        name: l10n.dashboardTrendBenchPressName,
+        gain: l10n.dashboardTrendBenchPressGain,
+        values: [210.0, 210.0, 212.5, 212.5, 215.0],
+        color: YronColors.secondary,
+      ),
+    ];
+    final personalBests = [
+      (l10n.dashboardPersonalBestDeadlift, '405'),
+      (l10n.dashboardPersonalBestSquat, '315'),
+      (l10n.dashboardPersonalBestBench, '225'),
+      (l10n.dashboardPersonalBestOhp, '135'),
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PROGRESS'),
+        title: Text(l10n.dashboardTitle),
         centerTitle: true,
         titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
           color: YronColors.primary,
@@ -23,44 +47,31 @@ class ProgressDashboardScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(20),
               children: [
-                const Row(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: YronStatCard(
-                        label: 'Total Volume',
+                        label: l10n.dashboardTotalVolumeLabel,
                         value: '124.5k',
-                        unit: 'lbs',
+                        unit: l10n.commonUnitLbs,
                       ),
                     ),
-                    SizedBox(width: YronSpacing.sm),
+                    const SizedBox(width: YronSpacing.sm),
                     Expanded(
                       child: YronStatCard(
-                        label: 'Workouts',
+                        label: l10n.dashboardWorkoutsLabel,
                         value: '18 / 20',
                         accent: YronColors.secondary,
-                        footer: Text('This Month'),
+                        footer: Text(l10n.dashboardThisMonthLabel),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: YronSpacing.lg),
-                const YronSectionHeader(title: 'STRENGTH GAINS'),
+                YronSectionHeader(title: l10n.dashboardStrengthGainsTitle),
                 const SizedBox(height: YronSpacing.md),
-                for (final trend in [
-                  (
-                    name: 'BARBELL SQUAT',
-                    gain: '+15 lbs',
-                    values: [280.0, 282.5, 287.5, 290.0, 295.0],
-                    color: YronColors.primary,
-                  ),
-                  (
-                    name: 'BENCH PRESS',
-                    gain: '+5 lbs',
-                    values: [210.0, 210.0, 212.5, 212.5, 215.0],
-                    color: YronColors.secondary,
-                  ),
-                ])
+                for (final trend in trends)
                   Padding(
                     padding: const EdgeInsets.only(bottom: YronSpacing.md),
                     child: YronCard(
@@ -77,15 +88,24 @@ class ProgressDashboardScreen extends StatelessWidget {
                           YronStrengthTrendChart(
                             height: 112,
                             color: trend.color,
-                            semanticLabel: '${trend.name} over five weeks',
-                            emptyLabel: 'No samples',
+                            semanticLabel: l10n
+                                .dashboardTrendChartSemanticLabel(trend.name),
+                            emptyLabel: l10n.dashboardTrendChartEmptyLabel,
                             points: [
                               for (final (index, value) in trend.values.indexed)
                                 YronStrengthPoint(
-                                  label: 'W${index + 1}',
+                                  label:
+                                      '${l10n.commonWeekAbbreviation}${index + 1}',
                                   value: value,
-                                  semanticLabel:
-                                      'Week ${index + 1}: $value lbs',
+                                  semanticLabel: l10n
+                                      .dashboardTrendPointSemanticLabel(
+                                        index + 1,
+                                        value.toStringAsFixed(
+                                          value == value.truncateToDouble()
+                                              ? 0
+                                              : 1,
+                                        ),
+                                      ),
                                 ),
                             ],
                           ),
@@ -94,7 +114,7 @@ class ProgressDashboardScreen extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(height: YronSpacing.sm),
-                const YronSectionHeader(title: 'PERSONAL BESTS'),
+                YronSectionHeader(title: l10n.dashboardPersonalBestsTitle),
                 const SizedBox(height: YronSpacing.md),
                 LayoutBuilder(
                   builder: (context, constraints) {
@@ -107,19 +127,14 @@ class ProgressDashboardScreen extends StatelessWidget {
                       spacing: YronSpacing.sm,
                       runSpacing: YronSpacing.sm,
                       children: [
-                        for (final (exercise, value) in [
-                          ('DEADLIFT', '405'),
-                          ('SQUAT', '315'),
-                          ('BENCH', '225'),
-                          ('OHP', '135'),
-                        ])
+                        for (final (exercise, value) in personalBests)
                           SizedBox(
                             width: width,
                             child: YronPersonalBestCard(
-                              label: '1 REP MAX',
+                              label: l10n.dashboardPersonalBestLabel,
                               exercise: exercise,
                               value: value,
-                              unit: 'lbs',
+                              unit: l10n.commonUnitLbs,
                             ),
                           ),
                       ],
@@ -127,9 +142,9 @@ class ProgressDashboardScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: YronSpacing.md),
-                const Text(
-                  'Sample progress data. Logged sessions stay local to this app session.',
-                  style: TextStyle(color: YronColors.textMuted),
+                Text(
+                  l10n.dashboardSampleDisclaimer,
+                  style: const TextStyle(color: YronColors.textMuted),
                 ),
               ],
             ),

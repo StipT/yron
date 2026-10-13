@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
+import '../exercise_library/exercise_catalog.dart';
 import '../program_creator/program_draft.dart';
 import '../program_creator/weekly_split_screen.dart';
 
 class CreateProgramSetupScreen extends StatefulWidget {
   const CreateProgramSetupScreen({super.key, this.onProgramSaved});
 
-  /// Called once after saving the local draft, before returning to app root.
   final ValueChanged<ProgramDraft>? onProgramSaved;
 
   @override
@@ -16,25 +17,30 @@ class CreateProgramSetupScreen extends StatefulWidget {
 }
 
 class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
-  static const _trainingFocuses = [
-    'HYPERTROPHY',
-    'STRENGTH',
-    'POWERLIFTING',
-    'BODYBUILDING',
-  ];
   static const _cycleDurations = [8, 10, 12];
 
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController(
-    text: 'HYPERTROPHY OVERLOAD 01',
-  );
-  final _philosophyController = TextEditingController();
-  var _selectedFocus = _trainingFocuses.first;
+  late final TextEditingController _nameController;
+  late final TextEditingController _philosophyController;
+  var _didInitControllers = false;
+  var _selectedFocus = ProgramFocus.hypertrophy;
   var _selectedCycleDuration = 10;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_didInitControllers) return;
+    _nameController = TextEditingController(
+      text: context.l10n.setupDefaultProgramName,
+    );
+    _philosophyController = TextEditingController();
+    _didInitControllers = true;
+  }
 
   void _continueToWeeklySplit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
+    final l10n = context.l10n;
     FocusScope.of(context).unfocus();
     Navigator.push<void>(
       context,
@@ -45,6 +51,7 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
             philosophy: _philosophyController.text.trim(),
             focus: _selectedFocus,
             weeks: _selectedCycleDuration,
+            catalog: buildExerciseCatalog(l10n),
           ),
           onProgramSaved: widget.onProgramSaved,
         ),
@@ -61,19 +68,21 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final stepLabels = localizedStepLabels(l10n);
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Back',
+          tooltip: l10n.commonBack,
           onPressed: () => Navigator.maybePop(context),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text('CREATE PROGRAM'),
+        title: Text(l10n.createProgramTitle),
         actions: [
           IconButton(
-            tooltip: 'Close',
+            tooltip: l10n.commonClose,
             onPressed: () => Navigator.maybePop(context),
             icon: const Icon(Icons.close),
           ),
@@ -86,10 +95,14 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: YronSpacing.md),
               child: YronStepIndicator(
-                labels: const ['SETUP', 'WEEKLY SPLIT', 'BUILD'],
+                labels: stepLabels,
                 currentIndex: 0,
                 semanticLabelBuilder: (index, state) =>
-                    'Step ${index + 1} of 3: ${['Setup', 'Weekly split', 'Build'][index]}',
+                    l10n.stepIndicatorSemanticLabel(
+                      index + 1,
+                      stepLabels.length,
+                      stepLabels[index],
+                    ),
               ),
             ),
             Expanded(
@@ -104,16 +117,19 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
                   ),
                   children: [
                     Text(
-                      'PHASE 01  /  ARCHITECT',
+                      l10n.setupPhaseLabel,
                       style: textTheme.labelSmall?.copyWith(
                         color: YronColors.primary,
                       ),
                     ),
                     const SizedBox(height: YronSpacing.sm),
-                    Text('1. PROGRAM SETUP', style: textTheme.headlineMedium),
+                    Text(
+                      l10n.setupScreenTitle,
+                      style: textTheme.headlineMedium,
+                    ),
                     const SizedBox(height: YronSpacing.xs),
                     Text(
-                      'Name your routine and define the training cycle parameters.',
+                      l10n.setupScreenDescription,
                       style: textTheme.bodySmall?.copyWith(
                         color: YronColors.textMuted,
                         height: 1.4,
@@ -121,8 +137,8 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
                     ),
                     const SizedBox(height: YronSpacing.lg),
                     YronSectionLabel(
-                      label: 'PROGRAM NAME',
-                      trailing: 'REQUIRED',
+                      label: l10n.setupProgramNameSection,
+                      trailing: l10n.commonRequired,
                       trailingColor: YronColors.primary,
                     ),
                     const SizedBox(height: YronSpacing.sm),
@@ -134,24 +150,24 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
                       style: textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
-                      decoration: const InputDecoration(
-                        labelText: 'Program name',
-                        suffixIcon: Icon(
+                      decoration: InputDecoration(
+                        labelText: l10n.setupProgramNameFieldLabel,
+                        suffixIcon: const Icon(
                           Icons.check_circle_outline,
                           color: YronColors.primary,
                         ),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Enter a program name to continue.';
+                          return l10n.setupProgramNameRequiredError;
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: YronSpacing.md),
-                    const YronSectionLabel(
-                      label: 'PROGRAM PHILOSOPHY',
-                      trailing: 'OPTIONAL',
+                    YronSectionLabel(
+                      label: l10n.setupProgramPhilosophySection,
+                      trailing: l10n.commonOptional,
                     ),
                     const SizedBox(height: YronSpacing.sm),
                     TextFormField(
@@ -160,35 +176,32 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
                       minLines: 2,
                       maxLines: 3,
                       textCapitalization: TextCapitalization.sentences,
-                      decoration: const InputDecoration(
-                        labelText: 'Program philosophy',
-                        hintText:
-                            'e.g. 5-day push/pull/legs focusing on progressive '
-                            'overload and high mechanical tension...',
+                      decoration: InputDecoration(
+                        labelText: l10n.setupProgramPhilosophyFieldLabel,
+                        hintText: l10n.setupProgramPhilosophyHint,
                       ),
                     ),
                     const SizedBox(height: YronSpacing.lg),
-                    const YronSectionLabel(label: 'TRAINING FOCUS'),
+                    YronSectionLabel(label: l10n.setupTrainingFocusSection),
                     const SizedBox(height: YronSpacing.sm),
                     Wrap(
                       spacing: YronSpacing.sm,
                       runSpacing: YronSpacing.sm,
                       children: [
-                        for (final focus in _trainingFocuses)
+                        for (final focus in ProgramFocus.values)
                           YronChoiceChip(
-                            key: ValueKey('focus-${focus.toLowerCase()}'),
-                            label: focus,
+                            key: ValueKey('focus-${focus.name}'),
+                            label: programFocusLabel(l10n, focus),
                             selected: _selectedFocus == focus,
-                            onPressed: () {
-                              setState(() => _selectedFocus = focus);
-                            },
+                            onPressed: () =>
+                                setState(() => _selectedFocus = focus),
                           ),
                       ],
                     ),
                     const SizedBox(height: YronSpacing.lg),
                     YronSectionLabel(
-                      label: 'CYCLE DURATION',
-                      trailing: 'RECOMMENDED: 10 WEEKS',
+                      label: l10n.setupCycleDurationSection,
+                      trailing: l10n.setupCycleDurationRecommended,
                       trailingColor: YronColors.primary,
                     ),
                     const SizedBox(height: YronSpacing.sm),
@@ -204,26 +217,21 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
                               ),
                               child: YronChoiceChip(
                                 key: ValueKey('duration-$duration'),
-                                label: '$duration WEEKS',
+                                label: l10n.setupCycleDurationOption(duration),
                                 selected: _selectedCycleDuration == duration,
-                                onPressed: () {
-                                  setState(
-                                    () => _selectedCycleDuration = duration,
-                                  );
-                                },
+                                onPressed: () => setState(
+                                  () => _selectedCycleDuration = duration,
+                                ),
                               ),
                             ),
                           ),
                       ],
                     ),
                     const SizedBox(height: YronSpacing.lg),
-                    const YronInfoCard(
+                    YronInfoCard(
                       icon: Icons.sync,
-                      title: 'CYCLE SYNCHRONIZATION',
-                      description:
-                          'This weekly split will repeat across all weeks in '
-                          'the cycle. Microcycle progressive overload and '
-                          'delta weights can be recalibrated per block.',
+                      title: l10n.setupInfoTitle,
+                      description: l10n.setupInfoDescription,
                     ),
                   ],
                 ),
@@ -244,7 +252,7 @@ class _CreateProgramSetupScreenState extends State<CreateProgramSetupScreen> {
           child: YronButton(
             key: const ValueKey('setup-next'),
             expand: true,
-            label: 'NEXT: CONFIGURE WEEKLY SPLIT',
+            label: l10n.setupNextButton,
             icon: Icons.arrow_forward,
             onPressed: _continueToWeeklySplit,
           ),

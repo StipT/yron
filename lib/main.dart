@@ -11,25 +11,47 @@ import 'features/tracker/active_program_screen.dart';
 import 'features/tracker/active_workout_screen.dart';
 import 'features/tracker/tracker_empty_screen.dart';
 import 'features/tracker/workout_sample.dart';
+import 'l10n/gen/app_localizations.dart';
+import 'l10n/l10n.dart';
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('en');
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Iron Progress',
+      onGenerateTitle: (context) => context.l10n.appTitle,
       debugShowCheckedModeBanner: false,
       theme: buildYronTheme(),
-      home: const IronProgressHome(),
+      locale: _locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: IronProgressHome(
+        locale: _locale,
+        onLocaleChanged: (locale) => setState(() => _locale = locale),
+      ),
     );
   }
 }
 
 class IronProgressHome extends StatefulWidget {
-  const IronProgressHome({super.key});
+  const IronProgressHome({
+    super.key,
+    required this.locale,
+    required this.onLocaleChanged,
+  });
+
+  final Locale locale;
+  final ValueChanged<Locale> onLocaleChanged;
 
   @override
   State<IronProgressHome> createState() => _IronProgressHomeState();
@@ -77,6 +99,7 @@ class _IronProgressHomeState extends State<IronProgressHome> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       body: IndexedStack(
         index: _tab,
@@ -100,22 +123,27 @@ class _IronProgressHomeState extends State<IronProgressHome> {
           SettingsScreen(
             onLibrary: _openLibrary,
             onCreateProgram: _createProgram,
+            selectedLocale: widget.locale,
+            onLocaleChanged: widget.onLocaleChanged,
           ),
         ],
       ),
       bottomNavigationBar: YronBottomNavigation(
-        items: const [
-          YronNavigationItem(label: 'Tracker', icon: Icons.edit_note),
+        items: [
+          YronNavigationItem(label: l10n.navTracker, icon: Icons.edit_note),
           YronNavigationItem(
-            label: 'Dashboard',
+            label: l10n.navDashboard,
             icon: Icons.dashboard_outlined,
             selectedIcon: Icons.dashboard,
           ),
           YronNavigationItem(
-            label: 'History',
+            label: l10n.navHistory,
             icon: Icons.calendar_today_outlined,
           ),
-          YronNavigationItem(label: 'Settings', icon: Icons.settings_outlined),
+          YronNavigationItem(
+            label: l10n.navSettings,
+            icon: Icons.settings_outlined,
+          ),
         ],
         selectedIndex: _tab,
         onSelected: (index) => setState(() => _tab = index),

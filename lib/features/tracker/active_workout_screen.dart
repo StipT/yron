@@ -3,13 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
 import 'workout_sample.dart';
 
 class ActiveWorkoutScreen extends StatefulWidget {
-  const ActiveWorkoutScreen({
-    super.key,
-    this.workout = WorkoutSample.shoulders,
-  });
+  const ActiveWorkoutScreen({super.key, required this.workout});
 
   final WorkoutSample workout;
 
@@ -48,13 +46,15 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
   String? _validateWeight(String? value) {
     final number = double.tryParse(value ?? '');
     return number == null || !number.isFinite || number < 0 || number > 2000
-        ? 'Enter 0–2000'
+        ? context.l10n.dayBuilderRangeError(0, 2000)
         : null;
   }
 
   String? _validateReps(String? value) {
     final number = int.tryParse(value ?? '');
-    return number == null || number < 1 || number > 999 ? 'Enter 1–999' : null;
+    return number == null || number < 1 || number > 999
+        ? context.l10n.dayBuilderRangeError(1, 999)
+        : null;
   }
 
   void _startRest(int seconds) {
@@ -82,11 +82,12 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
   }
 
   Future<void> _finish() async {
+    final l10n = context.l10n;
     if (!(_formKey.currentState?.validate() ?? false)) return;
     FocusScope.of(context).unfocus();
     if (_completedCount == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Complete at least one set to finish.')),
+        SnackBar(content: Text(l10n.activeWorkoutCompleteOneSetError)),
       );
       return;
     }
@@ -94,19 +95,21 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
       final finish = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Finish this workout?'),
+          title: Text(l10n.activeWorkoutFinishDialogTitle),
           content: Text(
-            '$_completedCount of ${_allSets.length} sets completed. '
-            'Only completed sets will appear in your local history.',
+            l10n.activeWorkoutFinishDialogDescription(
+              _completedCount,
+              _allSets.length,
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('KEEP TRAINING'),
+              child: Text(l10n.activeWorkoutKeepTrainingButton),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('FINISH WORKOUT'),
+              child: Text(l10n.activeWorkoutFinishButton),
             ),
           ],
         ),
@@ -126,6 +129,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
   }
 
   Future<void> _requestExit() async {
+    final l10n = context.l10n;
     if (_exitDialogOpen) return;
     if (_completedCount == 0) {
       Navigator.pop(context);
@@ -135,18 +139,16 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
     final discard = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Discard workout?'),
-        content: const Text(
-          'Your unfinished sample session will not be saved.',
-        ),
+        title: Text(l10n.activeWorkoutDiscardDialogTitle),
+        content: Text(l10n.activeWorkoutDiscardDialogDescription),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('KEEP TRAINING'),
+            child: Text(l10n.activeWorkoutKeepTrainingButton),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('DISCARD'),
+            child: Text(l10n.activeWorkoutDiscardButton),
           ),
         ],
       ),
@@ -167,6 +169,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return PopScope<WorkoutSessionSummary>(
       canPop: _allowExit || _completedCount == 0,
       onPopInvokedWithResult: (didPop, result) {
@@ -175,11 +178,11 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            tooltip: 'Back',
+            tooltip: l10n.commonBack,
             onPressed: _requestExit,
             icon: const Icon(Icons.arrow_back),
           ),
-          title: const Text('ACTIVE WORKOUT'),
+          title: Text(l10n.activeWorkoutTitle),
         ),
         body: SafeArea(
           top: false,
@@ -191,7 +194,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                 child: ListView(
                   padding: const EdgeInsets.all(YronSpacing.md),
                   children: [
-                    const YronBadge(label: 'LIVE SESSION · LOCAL SAMPLE'),
+                    YronBadge(label: l10n.activeWorkoutSessionBadge),
                     const SizedBox(height: YronSpacing.md),
                     Text(
                       widget.workout.title,
@@ -203,24 +206,28 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                       children: [
                         Expanded(
                           child: YronStatCard(
-                            label: 'VOLUME',
+                            label: l10n.activeWorkoutVolumeLabel,
                             value: _volume.toStringAsFixed(0),
-                            unit: 'lbs',
+                            unit: l10n.commonUnitLbs,
                             footer: Text(
-                              '$_completedCount / ${_allSets.length} sets',
+                              l10n.activeWorkoutSetProgress(
+                                _completedCount,
+                                _allSets.length,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(width: YronSpacing.sm),
                         Expanded(
                           child: YronStatCard(
-                            label: 'REST TIMER',
+                            label: l10n.activeWorkoutRestTimerLabel,
                             value:
-                                '${_restSeconds ~/ 60}:'
-                                '${(_restSeconds % 60).toString().padLeft(2, '0')}',
+                                '${_restSeconds ~/ 60}:${(_restSeconds % 60).toString().padLeft(2, '0')}',
                             accent: YronColors.secondary,
                             footer: YronButton(
-                              label: _timerRunning ? 'PAUSE' : 'START',
+                              label: _timerRunning
+                                  ? l10n.activeWorkoutPauseButton
+                                  : l10n.activeWorkoutStartButton,
                               variant: YronButtonVariant.quiet,
                               onPressed: () {
                                 if (_timerRunning) {
@@ -238,13 +245,10 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                       ],
                     ),
                     const SizedBox(height: YronSpacing.md),
-                    const YronInfoCard(
+                    YronInfoCard(
                       icon: Icons.trending_up,
-                      title: 'PROGRESSION · TARGET RPE 8.5',
-                      description:
-                          'Sample last session: 9 sets / 10,500 lbs. '
-                          'Aim for controlled reps. Consider +2.5 lbs next '
-                          'session only when your form and effort allow it.',
+                      title: l10n.activeWorkoutInfoTitle,
+                      description: l10n.activeWorkoutInfoDescription,
                     ),
                     const SizedBox(height: YronSpacing.md),
                     YronCard(
@@ -252,7 +256,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           YronSectionLabel(
-                            label: 'SESSION RPE',
+                            label: l10n.activeWorkoutSessionRpeLabel,
                             trailing: _rpe.toStringAsFixed(1),
                           ),
                           Slider(
@@ -277,9 +281,11 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                             children: [
                               YronSectionHeader(
                                 title: exercise.name,
-                                subtitle:
-                                    '${exercise.sets} sets · ${exercise.reps} reps '
-                                    '· ${exercise.restSeconds}s rest',
+                                subtitle: l10n.activeWorkoutExerciseSubtitle(
+                                  exercise.sets,
+                                  exercise.reps,
+                                  exercise.restSeconds,
+                                ),
                               ),
                               const SizedBox(height: YronSpacing.sm),
                               for (final (setIndex, set)
@@ -287,10 +293,13 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                                 YronWorkoutSetRow(
                                   key: ValueKey('log-set-$index-$setIndex'),
                                   setLabel: '${setIndex + 1}',
-                                  weightLabel: 'lbs',
-                                  repsLabel: 'Reps',
-                                  completeLabel:
-                                      '${exercise.name} set ${setIndex + 1} complete',
+                                  weightLabel: l10n.commonUnitLbs,
+                                  repsLabel: l10n.dayBuilderRepsLabel,
+                                  completeLabel: l10n
+                                      .activeWorkoutSetCompleteLabel(
+                                        exercise.name,
+                                        setIndex + 1,
+                                      ),
                                   weight: set.weight,
                                   reps: set.reps,
                                   completed: set.completed,
@@ -308,8 +317,8 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                               YronButton(
                                 label:
                                     _sets[index].every((set) => set.completed)
-                                    ? 'UNDO EXERCISE'
-                                    : 'COMPLETE EXERCISE',
+                                    ? l10n.activeWorkoutUndoExerciseButton
+                                    : l10n.activeWorkoutCompleteExerciseButton,
                                 variant: YronButtonVariant.secondary,
                                 onPressed: () {
                                   final completed = !_sets[index].every(
@@ -347,7 +356,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
             padding: const EdgeInsets.all(YronSpacing.md),
             child: YronButton(
               key: const ValueKey('finish-workout'),
-              label: 'FINISH WORKOUT',
+              label: l10n.activeWorkoutFinishButton,
               expand: true,
               icon: Icons.check,
               onPressed: _finish,

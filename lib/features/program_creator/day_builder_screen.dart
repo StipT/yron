@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
 import '../exercise_library/exercise_catalog.dart';
 import '../exercise_library/exercise_library_screen.dart';
 import '../exercise_library/exercise_picker_screen.dart';
@@ -50,21 +51,20 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
             MaterialPageRoute(
               fullscreenDialog: true,
               builder: (_) => ExercisePickerScreen(
-                dayName: day.name,
+                dayName: day.name(context.l10n),
                 unavailableIds: unavailable,
               ),
             ),
           )
         : showDayExercisePicker(
             context,
-            dayName: day.name,
+            dayName: day.name(context.l10n),
             unavailableIds: unavailable,
           );
     final exercises = await selection;
     if (!mounted || exercises == null || exercises.isEmpty) return;
     setState(() {
-      day.isRest = false;
-      if (day.title == 'Rest') day.title = 'Full Body';
+      day.activateWorkoutDefault();
       for (final exercise in exercises) {
         if (!day.exercises.any((item) => item.exercise.id == exercise.id)) {
           day.exercises.add(ProgramExerciseDraft(exercise: exercise));
@@ -84,16 +84,17 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
   void _preview() {
     if (!_validate()) return;
     FocusScope.of(context).unfocus();
+    final l10n = context.l10n;
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       constraints: const BoxConstraints(maxWidth: 640),
       builder: (context) => YronSheet(
-        title: '${_day.name} · ${_day.displayTitle}',
-        subtitle: 'WORKOUT PREVIEW',
+        title: '${_day.name(l10n)} · ${_day.displayTitle(l10n)}',
+        subtitle: l10n.dayBuilderPreviewTitle,
         actions: [
           YronButton(
-            label: 'BACK TO BUILDER',
+            label: l10n.dayBuilderBackToBuilderButton,
             onPressed: () => Navigator.pop(context),
           ),
         ],
@@ -101,16 +102,16 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (_day.isRest)
-              const Text('Recovery day. No exercises scheduled.')
+              Text(l10n.dayBuilderPreviewRestDescription)
             else if (_day.exercises.isEmpty)
-              const Text('Add exercises to build this workout.')
+              Text(l10n.dayBuilderPreviewEmptyDescription)
             else
               for (final item in _day.exercises)
                 Padding(
                   padding: const EdgeInsets.only(bottom: YronSpacing.sm),
                   child: YronExerciseRow(
                     name: item.exercise.name,
-                    summary: item.prescription,
+                    summary: item.prescription(l10n),
                   ),
                 ),
           ],
@@ -122,11 +123,10 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
   void _continue() {
     if (!_validate()) return;
     FocusScope.of(context).unfocus();
+    final l10n = context.l10n;
     if (!_day.isRest && _day.exercises.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Add an exercise or mark this day as rest.'),
-        ),
+        SnackBar(content: Text(l10n.dayBuilderAddExerciseOrRestError)),
       );
       return;
     }
@@ -140,9 +140,7 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
       );
       if (emptyIndex >= 0) setState(() => _dayIndex = emptyIndex);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Every workout day needs at least one exercise.'),
-        ),
+        SnackBar(content: Text(l10n.dayBuilderEveryWorkoutNeedsExerciseError)),
       );
       return;
     }
@@ -160,14 +158,16 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
   @override
   Widget build(BuildContext context) {
     final day = _day;
+    final l10n = context.l10n;
     final textTheme = Theme.of(context).textTheme;
+    final shortDayNames = localizedWeekdayShortNames(l10n);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WORKOUT BUILDER'),
+        title: Text(l10n.dayBuilderTitle),
         actions: [
           IconButton(
             key: const ValueKey('builder-library'),
-            tooltip: 'Exercise library',
+            tooltip: l10n.commonExerciseLibraryTooltip,
             icon: const Icon(Icons.menu_book_outlined),
             onPressed: () => Navigator.push<void>(
               context,
@@ -188,7 +188,7 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
                     horizontal: YronSpacing.md,
                   ),
                   child: YronStepIndicator(
-                    labels: const ['SETUP', 'WEEKLY SPLIT', 'BUILD'],
+                    labels: localizedStepLabels(l10n),
                     currentIndex: 2,
                   ),
                 ),
@@ -200,12 +200,12 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
                   ),
                   child: Row(
                     children: [
-                      for (final (index, item) in widget.draft.days.indexed)
+                      for (final (index, _) in widget.draft.days.indexed)
                         Padding(
                           padding: const EdgeInsets.only(right: YronSpacing.sm),
                           child: YronChoiceChip(
                             key: ValueKey('builder-day-$index'),
-                            label: item.name.substring(0, 3).toUpperCase(),
+                            label: shortDayNames[index],
                             selected: index == _dayIndex,
                             onPressed: () => _selectDay(index),
                           ),
@@ -220,57 +220,54 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
                       padding: const EdgeInsets.all(YronSpacing.md),
                       children: [
                         Text(
-                          day.name.toUpperCase(),
+                          day.name(l10n).toUpperCase(),
                           style: textTheme.labelSmall?.copyWith(
                             color: YronColors.primary,
                           ),
                         ),
                         const SizedBox(height: YronSpacing.sm),
-                        Text(day.displayTitle, style: textTheme.headlineMedium),
+                        Text(
+                          day.displayTitle(l10n),
+                          style: textTheme.headlineMedium,
+                        ),
                         const SizedBox(height: YronSpacing.md),
                         if (day.isRest)
                           YronEmptyState(
                             icon: Icons.self_improvement,
-                            title: 'Rest & recovery',
-                            description:
-                                'No workout is scheduled. Adding an '
-                                'exercise turns this into a workout day.',
+                            title: l10n.dayBuilderRestRecoveryTitle,
+                            description: l10n.dayBuilderRestRecoveryDescription,
                             action: YronButton(
-                              label: 'BUILD A WORKOUT',
+                              label: l10n.dayBuilderBuildWorkoutButton,
                               onPressed: () => _addExercises(),
                             ),
                           )
                         else ...[
                           TextFormField(
                             key: ValueKey('workout-title-$_dayIndex'),
-                            initialValue: day.title,
-                            decoration: const InputDecoration(
-                              labelText: 'Workout name',
+                            initialValue: day.titleText(l10n),
+                            decoration: InputDecoration(
+                              labelText: l10n.dayBuilderWorkoutNameLabel,
                             ),
                             textCapitalization: TextCapitalization.words,
-                            onChanged: (value) {
-                              if (value.trim().isNotEmpty) {
-                                day.title = value.trim();
-                              }
-                            },
+                            onChanged: (value) => day.updateTitle(value, l10n),
                             validator: (value) =>
                                 value == null || value.trim().isEmpty
-                                ? 'Enter a workout name.'
+                                ? l10n.dayBuilderWorkoutNameRequiredError
                                 : null,
                           ),
                           const SizedBox(height: YronSpacing.lg),
                           YronSectionLabel(
-                            label: 'EXERCISE PRESCRIPTIONS',
-                            trailing: '${day.exercises.length} EXERCISES',
+                            label: l10n.dayBuilderExercisePrescriptionsLabel,
+                            trailing: l10n.dayBuilderExerciseCount(
+                              day.exercises.length,
+                            ),
                           ),
                           const SizedBox(height: YronSpacing.md),
                           if (day.exercises.isEmpty)
-                            const YronEmptyState(
+                            YronEmptyState(
                               icon: Icons.fitness_center,
-                              title: 'Build your first exercise',
-                              description:
-                                  'Add exercises below, then choose '
-                                  'sets, reps and rest for each one.',
+                              title: l10n.dayBuilderEmptyTitle,
+                              description: l10n.dayBuilderEmptyDescription,
                             ),
                           ReorderableListView.builder(
                             key: ValueKey('day-exercises-$_dayIndex'),
@@ -297,21 +294,26 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
                                   sets: item.sets,
                                   reps: item.reps,
                                   restSeconds: item.restSeconds,
-                                  setsLabel: 'Sets',
+                                  setsLabel: l10n.dayBuilderSetsLabel,
                                   repsLabel: item.exercise.id == 'plank'
-                                      ? 'Hold (sec)'
-                                      : 'Reps',
-                                  restLabel: 'Rest (sec)',
-                                  rangeError: (min, max) => 'Enter $min–$max.',
+                                      ? l10n.dayBuilderHoldSecondsLabel
+                                      : l10n.dayBuilderRepsLabel,
+                                  restLabel: l10n.dayBuilderRestSecondsLabel,
+                                  rangeError: l10n.dayBuilderRangeError,
                                   onSetsChanged: (value) => item.sets = value,
                                   onRepsChanged: (value) => item.reps = value,
                                   onRestChanged: (value) =>
                                       item.restSeconds = value,
-                                  deleteTooltip: 'Delete ${item.exercise.name}',
-                                  moveUpTooltip:
-                                      'Move ${item.exercise.name} up',
-                                  moveDownTooltip:
-                                      'Move ${item.exercise.name} down',
+                                  deleteTooltip: l10n.dayBuilderDeleteTooltip(
+                                    item.exercise.name,
+                                  ),
+                                  moveUpTooltip: l10n.dayBuilderMoveUpTooltip(
+                                    item.exercise.name,
+                                  ),
+                                  moveDownTooltip: l10n
+                                      .dayBuilderMoveDownTooltip(
+                                        item.exercise.name,
+                                      ),
                                   onMoveUp: index == 0
                                       ? null
                                       : () => _moveExercise(index, index - 1),
@@ -321,8 +323,9 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
                                   onDelete: () => setState(
                                     () => day.exercises.removeAt(index),
                                   ),
-                                  detailsTooltip:
-                                      'Details: ${item.exercise.name}',
+                                  detailsTooltip: l10n.dayBuilderDetailsTooltip(
+                                    item.exercise.name,
+                                  ),
                                   onDetails: () => showExerciseDetails(
                                     context,
                                     item.exercise,
@@ -330,7 +333,7 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
                                   dragHandle: ReorderableDragStartListener(
                                     index: index,
                                     child: Tooltip(
-                                      message: 'Drag to reorder',
+                                      message: l10n.dayBuilderDragTooltip,
                                       child: const SizedBox.square(
                                         dimension: 48,
                                         child: Icon(Icons.drag_indicator),
@@ -349,19 +352,19 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
                           children: [
                             YronButton(
                               key: const ValueKey('builder-add-exercises'),
-                              label: 'ADD EXERCISES',
+                              label: l10n.commonAddExercises,
                               icon: Icons.add,
                               onPressed: () => _addExercises(),
                             ),
                             YronButton(
                               key: const ValueKey('builder-full-picker'),
-                              label: 'BROWSE ALL EXERCISES',
+                              label: l10n.commonBrowseAllExercises,
                               variant: YronButtonVariant.secondary,
                               onPressed: () => _addExercises(fullScreen: true),
                             ),
                             YronButton(
                               key: const ValueKey('builder-preview'),
-                              label: 'PREVIEW',
+                              label: l10n.commonPreview,
                               variant: YronButtonVariant.quiet,
                               icon: Icons.visibility_outlined,
                               onPressed: _preview,
@@ -385,8 +388,8 @@ class _DayBuilderScreenState extends State<DayBuilderScreen> {
             key: const ValueKey('builder-continue'),
             expand: true,
             label: widget.returnToSplit
-                ? 'SAVE DAY & RETURN'
-                : 'CONTINUE: REVIEW PROGRAM',
+                ? l10n.dayBuilderSaveAndReturnButton
+                : l10n.dayBuilderContinueButton,
             icon: Icons.arrow_forward,
             onPressed: _continue,
           ),

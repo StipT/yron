@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/gen/app_localizations.dart';
+import '../../l10n/l10n.dart';
 import '../program_creator/program_draft.dart';
 import 'workout_sample.dart';
 
@@ -21,57 +24,49 @@ class WeekDaysScreen extends StatefulWidget {
 }
 
 class _WeekDaysScreenState extends State<WeekDaysScreen> {
-  static const _names = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+  static const _sampleTitles = [
+    WorkoutTitleId.chestTriceps,
+    WorkoutTitleId.backBiceps,
+    WorkoutTitleId.rest,
+    WorkoutTitleId.legsAbsQuadFocus,
+    WorkoutTitleId.fullBody,
+    WorkoutTitleId.fullBody,
+    WorkoutTitleId.rest,
   ];
-  static const _titles = [
-    'Chest & Triceps',
-    'Back & Biceps',
-    'Rest & Recovery',
-    'Legs & Abs (Quad Focus)',
-    'Shoulders & Arms Hypertrophy',
-    'Full Body',
-    'Rest & Recovery',
-  ];
-  static const _months = [
-    'JAN',
-    'FEB',
-    'MAR',
-    'APR',
-    'MAY',
-    'JUN',
-    'JUL',
-    'AUG',
-    'SEP',
-    'OCT',
-    'NOV',
-    'DEC',
-  ];
+
   int _selectedDay = 4;
 
   bool _isRest(int index) =>
       widget.program?.days[index].isRest ?? (index == 2 || index == 6);
 
-  String _title(int index) =>
-      widget.program?.days[index].displayTitle ?? _titles[index];
+  String _title(int index, AppLocalizations l10n) =>
+      widget.program?.days[index].displayTitle(l10n) ??
+      switch (_sampleTitles[index]) {
+        WorkoutTitleId.chestTriceps => l10n.workoutTitleChestTriceps,
+        WorkoutTitleId.backBiceps => l10n.workoutTitleBackBiceps,
+        WorkoutTitleId.rest => l10n.workoutTitleRestRecovery,
+        WorkoutTitleId.legsAbsQuadFocus => l10n.workoutTitleLegsAbsQuadFocus,
+        WorkoutTitleId.shoulders => l10n.workoutTitleShoulders,
+        WorkoutTitleId.fullBody =>
+          index == 4
+              ? l10n.workoutTitleShouldersArmsHypertrophy
+              : l10n.workoutTitleFullBody,
+      };
 
   DateTime get _weekStart =>
       DateTime(2026, 8, 10).add(Duration(days: (widget.week - 4) * 7));
 
-  String _dateLabel(DateTime date) => '${_months[date.month - 1]} ${date.day}';
+  String _dateLabel(BuildContext context, DateTime date) {
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    return '${DateFormat.MMM(locale).format(date).toUpperCase()} ${date.day}';
+  }
 
-  String _sampleStatus(int index) => switch (index) {
-    0 || 1 => 'COMPLETED',
-    2 || 6 => 'RECOVERY',
-    3 => 'SKIPPED',
-    4 => 'TODAY · READY',
-    _ => 'UPCOMING',
+  String _sampleStatus(AppLocalizations l10n, int index) => switch (index) {
+    0 || 1 => l10n.weekDaysCompletedStatus,
+    2 || 6 => l10n.weekDaysRecoveryStatus,
+    3 => l10n.weekDaysSkippedStatus,
+    4 => l10n.weekDaysTodayReadyStatus,
+    _ => l10n.weekDaysUpcomingStatus,
   };
 
   Color _statusColor(int index) => switch (index) {
@@ -84,11 +79,14 @@ class _WeekDaysScreenState extends State<WeekDaysScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final rest = _isRest(_selectedDay);
+    final names = localizedWeekdayNames(l10n);
+    final shortNames = localizedWeekdayShortNames(l10n);
     final start = _weekStart;
     final end = start.add(const Duration(days: 6));
     return Scaffold(
-      appBar: AppBar(title: const Text('SELECT WORKOUT DAY')),
+      appBar: AppBar(title: Text(l10n.weekDaysTitle)),
       body: SafeArea(
         top: false,
         child: Center(
@@ -98,17 +96,19 @@ class _WeekDaysScreenState extends State<WeekDaysScreen> {
               padding: const EdgeInsets.all(YronSpacing.md),
               children: [
                 YronSectionHeader(
-                  title: 'SELECT WORKOUT DAY',
+                  title: l10n.weekDaysTitle,
                   subtitle:
                       widget.program?.name ??
-                      'HYPERTROPHY OVERLOAD 1.0 · WEEK ${widget.week} '
-                          '(${_dateLabel(start)} – ${_dateLabel(end)})',
+                      l10n.weekDaysSampleSubtitle(
+                        widget.week,
+                        _dateLabel(context, start),
+                        _dateLabel(context, end),
+                      ),
                 ),
                 const SizedBox(height: YronSpacing.sm),
-                const Text(
-                  'Log your sets and compare against previous benchmarks '
-                  'to keep making progress.',
-                  style: TextStyle(color: YronColors.textMuted),
+                Text(
+                  l10n.weekDaysDescription,
+                  style: const TextStyle(color: YronColors.textMuted),
                 ),
                 const SizedBox(height: YronSpacing.md),
                 if (widget.program == null)
@@ -116,18 +116,16 @@ class _WeekDaysScreenState extends State<WeekDaysScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.track_changes,
                               color: YronColors.primary,
                               size: 18,
                             ),
-                            SizedBox(width: YronSpacing.sm),
-                            Expanded(
-                              child: Text('3 OF 5 COMPLETED · 1 SKIPPED'),
-                            ),
-                            Text(
+                            const SizedBox(width: YronSpacing.sm),
+                            Expanded(child: Text(l10n.weekDaysProgressSummary)),
+                            const Text(
                               '60%',
                               style: TextStyle(
                                 color: YronColors.primary,
@@ -137,10 +135,10 @@ class _WeekDaysScreenState extends State<WeekDaysScreen> {
                           ],
                         ),
                         const SizedBox(height: YronSpacing.sm),
-                        const YronProgressBar(
+                        YronProgressBar(
                           value: .6,
-                          semanticLabel: 'Weekly workout progress',
-                          semanticValue: '60 percent',
+                          semanticLabel: l10n.weekDaysProgressSemanticLabel,
+                          semanticValue: l10n.weekDaysProgressSemanticValue,
                         ),
                       ],
                     ),
@@ -149,28 +147,27 @@ class _WeekDaysScreenState extends State<WeekDaysScreen> {
                   const SizedBox(height: YronSpacing.md),
                 YronDaySelector(
                   labels: [
-                    for (final (index, name) in _names.indexed)
-                      '${name.substring(0, 3).toUpperCase()} '
-                          '${_dateLabel(start.add(Duration(days: index))).split(' ').last}',
+                    for (final (index, name) in shortNames.indexed)
+                      '$name ${start.add(Duration(days: index)).day}',
                   ],
                   selectedIndex: _selectedDay,
                   onSelected: (index) => setState(() => _selectedDay = index),
                 ),
                 const SizedBox(height: YronSpacing.lg),
-                for (final (index, name) in _names.indexed)
+                for (final (index, name) in names.indexed)
                   Padding(
                     padding: const EdgeInsets.only(bottom: YronSpacing.sm),
                     child: YronWorkoutRow(
                       title: name,
-                      summary: _title(index),
+                      summary: _title(index, l10n),
                       icon: _isRest(index)
                           ? Icons.self_improvement
                           : Icons.fitness_center,
                       metrics: widget.program == null && index < 2
                           ? Text(
                               index == 0
-                                  ? '4 Exercises · 14,200 KG Vol'
-                                  : '4 Exercises logged',
+                                  ? l10n.weekDaysCompletedMetricsVolume
+                                  : l10n.weekDaysCompletedMetricsLogged,
                               style: const TextStyle(
                                 color: YronColors.textMuted,
                               ),
@@ -178,10 +175,10 @@ class _WeekDaysScreenState extends State<WeekDaysScreen> {
                           : null,
                       status: YronBadge(
                         label: widget.program == null
-                            ? _sampleStatus(index)
+                            ? _sampleStatus(l10n, index)
                             : _isRest(index)
-                            ? 'RECOVERY'
-                            : 'PLANNED',
+                            ? l10n.weekDaysRecoveryStatus
+                            : l10n.weekDaysPlannedStatus,
                         color: widget.program == null
                             ? _statusColor(index)
                             : _isRest(index)
@@ -194,37 +191,40 @@ class _WeekDaysScreenState extends State<WeekDaysScreen> {
                 const SizedBox(height: YronSpacing.md),
                 YronInfoCard(
                   icon: rest ? Icons.self_improvement : Icons.timer_outlined,
-                  title: '${_names[_selectedDay]} · ${_title(_selectedDay)}',
+                  title:
+                      '${names[_selectedDay]} · ${_title(_selectedDay, l10n)}',
                   description: rest
-                      ? 'Recovery is part of the plan. Choose a workout day '
-                            'when you are ready to train.'
-                      : 'Review the exercises and log each set in the session logger.',
+                      ? l10n.weekDaysRestDescription
+                      : l10n.weekDaysWorkoutDescription,
                 ),
                 const SizedBox(height: YronSpacing.md),
                 if (!rest)
                   YronButton(
-                    label: 'START SELECTED WORKOUT',
+                    label: l10n.weekDaysStartSelectedWorkoutButton,
                     expand: true,
                     onPressed: () {
                       final program = widget.program;
                       widget.onStartWorkout(
                         program == null
-                            ? WorkoutSample.forSampleDay(_selectedDay)
-                            : WorkoutSample.fromDay(program.days[_selectedDay]),
+                            ? WorkoutSample.forSampleDay(_selectedDay, l10n)
+                            : WorkoutSample.fromDay(
+                                program.days[_selectedDay],
+                                l10n,
+                              ),
                       );
                     },
                   )
                 else
                   YronButton(
-                    label: 'BACK TO PROGRAM',
+                    label: l10n.weekDaysBackToProgramButton,
                     variant: YronButtonVariant.secondary,
                     onPressed: () => Navigator.pop(context),
                   ),
                 const SizedBox(height: YronSpacing.md),
                 if (widget.program != null)
-                  const Text(
-                    'Workout assignments from your local program draft.',
-                    style: TextStyle(color: YronColors.textMuted),
+                  Text(
+                    l10n.weekDaysProgramFooter,
+                    style: const TextStyle(color: YronColors.textMuted),
                   ),
               ],
             ),

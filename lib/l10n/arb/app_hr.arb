@@ -1,0 +1,470 @@
+{
+  "@@locale": "hr",
+  "appTitle": "Iron Progress",
+  "navTracker": "Tracker",
+  "navDashboard": "Nadzorna ploča",
+  "navHistory": "Povijest",
+  "navSettings": "Postavke",
+  "localeEnglish": "English",
+  "localeGerman": "Deutsch",
+  "localeCroatian": "Hrvatski",
+  "commonBack": "Natrag",
+  "commonClose": "Zatvori",
+  "commonCancel": "ODUSTANI",
+  "commonDone": "GOTOVO",
+  "commonPreview": "PREGLED",
+  "commonRequired": "OBAVEZNO",
+  "commonOptional": "OPCIONALNO",
+  "commonAll": "Sve",
+  "commonWorkout": "TRENING",
+  "commonRest": "ODMOR",
+  "commonAddExercises": "DODAJ VJEŽBE",
+  "commonBrowseAllExercises": "PREGLEDAJ SVE VJEŽBE",
+  "commonExerciseLibrary": "BIBLIOTEKA VJEŽBI",
+  "commonExerciseLibraryTooltip": "Biblioteka vježbi",
+  "commonCreateProgram": "IZRADI PROGRAM",
+  "commonStartWorkout": "POKRENI TRENING",
+  "commonUnitLbs": "lbs",
+  "commonWeekAbbreviation": "T",
+  "dayMonday": "Ponedjeljak",
+  "dayTuesday": "Utorak",
+  "dayWednesday": "Srijeda",
+  "dayThursday": "Četvrtak",
+  "dayFriday": "Petak",
+  "daySaturday": "Subota",
+  "daySunday": "Nedjelja",
+  "dayMondayShort": "PON",
+  "dayTuesdayShort": "UTO",
+  "dayWednesdayShort": "SRI",
+  "dayThursdayShort": "ČET",
+  "dayFridayShort": "PET",
+  "daySaturdayShort": "SUB",
+  "daySundayShort": "NED",
+  "stepSetup": "POSTAVKE",
+  "stepWeeklySplit": "TJEDNI RASPORED",
+  "stepBuild": "SASTAVLJANJE",
+  "stepIndicatorSemanticLabel": "Korak {step} od {total}: {label}",
+  "@stepIndicatorSemanticLabel": {
+    "placeholders": {
+      "step": {"type": "int"},
+      "total": {"type": "int"},
+      "label": {"type": "String"}
+    }
+  },
+  "focusHypertrophy": "HIPERTROFIJA",
+  "focusStrength": "SNAGA",
+  "focusPowerlifting": "POWERLIFTING",
+  "focusBodybuilding": "BODYBUILDING",
+  "workoutTitleChestTriceps": "Prsa & triceps",
+  "workoutTitleBackBiceps": "Leđa & biceps",
+  "workoutTitleRest": "Odmor",
+  "workoutTitleLegsAbsQuadFocus": "Noge & trbuh (naglasak na kvadriceps)",
+  "workoutTitleShoulders": "Ramena",
+  "workoutTitleFullBody": "Cijelo tijelo",
+  "workoutTitleRestRecovery": "Odmor & oporavak",
+  "workoutTitleShouldersArmsHypertrophy": "Ramena & ruke hipertrofija",
+  "workoutTitleLegsAbs": "Noge & trbuh",
+  "muscleChest": "Prsa",
+  "muscleBack": "Leđa",
+  "muscleBiceps": "Biceps",
+  "muscleTriceps": "Triceps",
+  "muscleQuads": "Kvadricepsi",
+  "muscleAbs": "Trbuh",
+  "muscleShoulders": "Ramena",
+  "equipmentBarbell": "Šipka",
+  "equipmentDumbbell": "Bučice",
+  "equipmentCable": "Sajla",
+  "equipmentMachine": "Sprava",
+  "equipmentBodyweight": "Vlastita težina",
+  "difficultyBeginner": "Početnik",
+  "difficultyIntermediate": "Srednje",
+  "difficultyAdvanced": "Napredno",
+  "exerciseBenchPressName": "Bench press sa šipkom",
+  "exerciseBenchPressInstructions": "Stopala čvrsto postavi na pod i zategni trup. Kontrolirano spusti šipku na prsa pa je potisni natrag gore bez podizanja kukova.",
+  "exerciseInclinePressName": "Kosi potisak bučicama",
+  "exerciseInclinePressInstructions": "Namjesti klupu na blagi nagib. Zadrži lopatice povučene i potisni bučice iznad gornjeg dijela prsa.",
+  "exerciseCableFlyName": "Leptir na sajlama za prsa",
+  "exerciseCableFlyInstructions": "Laktovi neka budu blago savijeni. Spoji ručke ispred prsa pa se polako vrati u ugodno istezanje.",
+  "exerciseTricepsPushdownName": "Potisak za triceps užetom",
+  "exerciseTricepsPushdownInstructions": "Drži laktove uz tijelo. Ispruži ruke prema dolje i razdvoji uže, bez pomicanja ramena.",
+  "exerciseLatPulldownName": "Lat pulldown",
+  "exerciseLatPulldownInstructions": "Zategni trup i povuci šipku prema gornjem dijelu prsa. Vodi pokret laktovima i kontroliraj povratak.",
+  "exerciseBarbellRowName": "Pretklon veslanje šipkom",
+  "exerciseBarbellRowInstructions": "Napravi pretklon iz kukova uz neutralna leđa. Povuci šipku prema donjim rebrima bez njihanja trupa.",
+  "exerciseBicepsCurlName": "Biceps pregib bučicama",
+  "exerciseBicepsCurlInstructions": "Nadlaktice drži mirnima. Podigni bučice prema ramenima i spusti ih pod kontrolom.",
+  "exerciseSquatName": "Stražnji čučanj sa šipkom",
+  "exerciseSquatInstructions": "Zategni tijelo prije svakog ponavljanja. Savij kukove i koljena do sigurne dubine pa se odgurni kroz cijelo stopalo.",
+  "exerciseLegExtensionName": "Ekstenzija nogu",
+  "exerciseLegExtensionInstructions": "Koljena poravnaj s osi sprave. Ispruži noge bez agresivnog zaključavanja i spuštaj pod kontrolom.",
+  "exercisePlankName": "Plank",
+  "exercisePlankInstructions": "Laktovi neka budu ispod ramena, a tijelo u ravnoj liniji. Zategni trup i diši mirno. Za ovu vježbu vrijeme zadržavanja upisuje se u polje za ponavljanja.",
+  "exerciseOverheadPressName": "Potisak iznad glave sa šipkom",
+  "exerciseOverheadPressInstructions": "Zategni trup i drži rebra spuštenima. Potisni šipku iznad glave bez zabacivanja leđa pa je vrati do visine ramena.",
+  "exerciseLateralRaiseName": "Bočno podizanje bučica",
+  "exerciseLateralRaiseInstructions": "Uz blago savijene laktove podigni ruke do visine ramena. Radi kontrolirano, bez slijeganja ramenima i zamaha.",
+  "exerciseFacePullName": "Face pull na sajli",
+  "exerciseFacePullInstructions": "Povuci uže prema čelu s laktovima visoko. Trup drži mirnim i lagano stisni lopatice.",
+  "exerciseSeatedDumbbellPressName": "Sjedeći potisak bučicama",
+  "exerciseCableTricepsPushdownName": "Potisak za triceps na sajli",
+  "exerciseCableCrunchName": "Cable crunch",
+  "exerciseDeadliftName": "Mrtvo dizanje",
+  "exerciseBarbellSquatName": "Čučanj sa šipkom",
+  "exerciseLibraryTitle": "BIBLIOTEKA VJEŽBI",
+  "exercisePickerSearchLabel": "Pretraži vježbe",
+  "exercisePickerClearTooltip": "Očisti pretragu",
+  "exercisePickerMuscleLabel": "MIŠIĆNA SKUPINA",
+  "exercisePickerEquipmentLabel": "Oprema",
+  "exercisePickerDifficultyLabel": "Težina",
+  "exercisePickerEmptyTitle": "Nema odgovarajućih vježbi",
+  "exercisePickerEmptyDescription": "Pokušaj s drugim pojmom ili promijeni filtre.",
+  "exercisePickerDetailsTooltip": "Detalji vježbe",
+  "exercisePickerSelectedLabel": "{count, plural, one{Odabrana je # vježba} few{Odabrane su # vježbe} other{Odabrano je # vježbi}}",
+  "@exercisePickerSelectedLabel": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "exercisePickerConfirmLabel": "DODAJ {count} VJEŽBE",
+  "@exercisePickerConfirmLabel": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "exerciseDetailsTechniqueLabel": "TEHNIKA",
+  "exerciseDetailsInfoTitle": "KONTROLIRAJ SVAKO PONAVLJANJE",
+  "exerciseDetailsInfoDescription": "Odaberi opterećenje s kojim možeš zadržati dobru formu. Ako osjetiš bol, stani i potraži pomoć kvalificiranog trenera.",
+  "exercisePickerTitle": "ODABERI VJEŽBE",
+  "exercisePickerCancelTooltip": "Odustani od odabira vježbi",
+  "exercisePickerAddToDay": "Dodaj vježbe za {dayName}",
+  "@exercisePickerAddToDay": {
+    "placeholders": {"dayName": {"type": "String"}}
+  },
+  "exercisePickerAddToDayTitle": "Dodaj vježbe za {dayName}",
+  "@exercisePickerAddToDayTitle": {
+    "placeholders": {"dayName": {"type": "String"}}
+  },
+  "dashboardTitle": "NAPREDAK",
+  "dashboardTotalVolumeLabel": "Ukupni volumen",
+  "dashboardWorkoutsLabel": "Treninzi",
+  "dashboardThisMonthLabel": "Ovaj mjesec",
+  "dashboardStrengthGainsTitle": "DOBICI U SNAZI",
+  "dashboardTrendBarbellSquatName": "ČUČANJ SA ŠIPKOM",
+  "dashboardTrendBarbellSquatGain": "+15 lbs",
+  "dashboardTrendBenchPressName": "BENCH PRESS",
+  "dashboardTrendBenchPressGain": "+5 lbs",
+  "dashboardTrendChartSemanticLabel": "{exercise} kroz pet tjedana",
+  "@dashboardTrendChartSemanticLabel": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dashboardTrendChartEmptyLabel": "Nema uzoraka",
+  "dashboardTrendPointSemanticLabel": "Tjedan {week}: {value} lbs",
+  "@dashboardTrendPointSemanticLabel": {
+    "placeholders": {
+      "week": {"type": "int"},
+      "value": {"type": "String"}
+    }
+  },
+  "dashboardPersonalBestsTitle": "OSOBNI REKORDI",
+  "dashboardPersonalBestLabel": "1RM",
+  "dashboardPersonalBestDeadlift": "MRTVO",
+  "dashboardPersonalBestSquat": "ČUČANJ",
+  "dashboardPersonalBestBench": "BENCH",
+  "dashboardPersonalBestOhp": "OHP",
+  "dashboardSampleDisclaimer": "Primjerni podaci napretka. Evidentirani treninzi ostaju lokalno spremljeni samo u ovoj sesiji aplikacije.",
+  "historyTitle": "POVIJEST",
+  "historySectionTitle": "POVIJEST TRENINGA",
+  "historySectionSubtitle": "Lokalne sesije · resetiraju se pri ponovnom pokretanju aplikacije",
+  "historyEmptyTitle": "Nema zabilježenih sesija",
+  "historyEmptyDescription": "Završi trening u Trackeru da bi se pojavio ovdje.",
+  "historySessionSummary": "{sets, plural, one{# serija} few{# serije} other{# serija}} · {volume} lbs",
+  "@historySessionSummary": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "volume": {"type": "String"}
+    }
+  },
+  "historyCompleteBadge": "ZAVRŠENO",
+  "createProgramTitle": "IZRADI PROGRAM",
+  "setupDefaultProgramName": "HIPERTROFIJA OVERLOAD 01",
+  "setupPhaseLabel": "FAZA 01  /  ARHITEKT",
+  "setupScreenTitle": "1. POSTAVLJANJE PROGRAMA",
+  "setupScreenDescription": "Daj naziv svojoj rutini i postavi parametre ciklusa treninga.",
+  "setupProgramNameSection": "NAZIV PROGRAMA",
+  "setupProgramNameFieldLabel": "Naziv programa",
+  "setupProgramNameRequiredError": "Unesi naziv programa za nastavak.",
+  "setupProgramPhilosophySection": "FILOZOFIJA PROGRAMA",
+  "setupProgramPhilosophyFieldLabel": "Filozofija programa",
+  "setupProgramPhilosophyHint": "npr. 5-dnevni push/pull/legs s fokusom na progresivno opterećenje i visoku mehaničku napetost...",
+  "setupTrainingFocusSection": "FOKUS TRENINGA",
+  "setupCycleDurationSection": "TRAJANJE CIKLUSA",
+  "setupCycleDurationRecommended": "PREPORUKA: 10 TJEDANA",
+  "setupCycleDurationOption": "{weeks} TJEDANA",
+  "@setupCycleDurationOption": {
+    "placeholders": {"weeks": {"type": "int"}}
+  },
+  "setupInfoTitle": "USKLAĐIVANJE CIKLUSA",
+  "setupInfoDescription": "Ovaj tjedni raspored ponavljat će se kroz sve tjedne ciklusa. Progresivno opterećenje i skokovi težine mogu se ponovno podesiti po bloku.",
+  "setupNextButton": "DALJE: POSTAVI TJEDNI RASPORED",
+  "weeklySplitPhaseLabel": "FAZA 02 / STRUKTURA",
+  "weeklySplitScreenTitle": "2. TJEDNI RASPORED",
+  "weeklySplitSummary": "{name} · {focus} · {weeks} tjedana",
+  "@weeklySplitSummary": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "focus": {"type": "String"},
+      "weeks": {"type": "int"}
+    }
+  },
+  "weeklySplitDescription": "Odaberi dane treninga i oporavka. Uredi trening da složiš plan vježbi.",
+  "weeklySplitScheduleLabel": "TJEDNI RASPORED",
+  "weeklySplitWorkoutDaysBadge": "{count} DANA TRENINGA",
+  "@weeklySplitWorkoutDaysBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "weeklySplitEditDayTooltip": "Uredi {dayName}",
+  "@weeklySplitEditDayTooltip": {
+    "placeholders": {"dayName": {"type": "String"}}
+  },
+  "weeklySplitInfoTitle": "TVOJ PONAVLJAJUĆI MIKROCIKLUS",
+  "weeklySplitInfoDescription": "Ovaj sedmodnevni raspored ponavlja se svaki tjedan programa. Vježbe ostaju spremljene i na danima odmora ako ih kasnije vratiš u trening.",
+  "weeklySplitNextButton": "DALJE: SLOŽI TRENINGE",
+  "dayBuilderTitle": "SASTAVLJAČ TRENINGA",
+  "dayBuilderPreviewTitle": "PREGLED TRENINGA",
+  "dayBuilderBackToBuilderButton": "NATRAG NA UREĐIVANJE",
+  "dayBuilderPreviewRestDescription": "Dan oporavka. Nema planiranih vježbi.",
+  "dayBuilderPreviewEmptyDescription": "Dodaj vježbe da složiš ovaj trening.",
+  "dayBuilderAddExerciseOrRestError": "Dodaj vježbu ili označi dan kao odmor.",
+  "dayBuilderEveryWorkoutNeedsExerciseError": "Svaki dan treninga treba barem jednu vježbu.",
+  "dayBuilderRestRecoveryTitle": "Odmor & oporavak",
+  "dayBuilderRestRecoveryDescription": "Za ovaj dan nije planiran trening. Dodavanjem vježbe pretvaraš ga u dan treninga.",
+  "dayBuilderBuildWorkoutButton": "SLOŽI TRENING",
+  "dayBuilderWorkoutNameLabel": "Naziv treninga",
+  "dayBuilderWorkoutNameRequiredError": "Unesi naziv treninga.",
+  "dayBuilderExercisePrescriptionsLabel": "PROPISANE VJEŽBE",
+  "dayBuilderExerciseCount": "{count} VJEŽBE",
+  "@dayBuilderExerciseCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "dayBuilderEmptyTitle": "Dodaj prvu vježbu",
+  "dayBuilderEmptyDescription": "Dodaj vježbe ispod pa postavi serije, ponavljanja i odmor za svaku od njih.",
+  "dayBuilderSetsLabel": "Serije",
+  "dayBuilderRepsLabel": "Ponavljanja",
+  "dayBuilderHoldSecondsLabel": "Zadržaj (sek)",
+  "dayBuilderRestSecondsLabel": "Odmor (sek)",
+  "dayBuilderRangeError": "Unesi {min}–{max}.",
+  "@dayBuilderRangeError": {
+    "placeholders": {
+      "min": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "dayBuilderDeleteTooltip": "Obriši: {exercise}",
+  "@dayBuilderDeleteTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderMoveUpTooltip": "Pomakni gore: {exercise}",
+  "@dayBuilderMoveUpTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderMoveDownTooltip": "Pomakni dolje: {exercise}",
+  "@dayBuilderMoveDownTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderDetailsTooltip": "Detalji: {exercise}",
+  "@dayBuilderDetailsTooltip": {
+    "placeholders": {"exercise": {"type": "String"}}
+  },
+  "dayBuilderDragTooltip": "Povuci za promjenu redoslijeda",
+  "dayBuilderSaveAndReturnButton": "SPREMI DAN I VRATI SE",
+  "dayBuilderContinueButton": "DALJE: PREGLEDAJ PROGRAM",
+  "programExercisePrescriptionReps": "{sets, plural, one{# serija} few{# serije} other{# serija}} × {reps} pon. · {restSeconds}s odmora",
+  "@programExercisePrescriptionReps": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "reps": {"type": "int"},
+      "restSeconds": {"type": "int"}
+    }
+  },
+  "programExercisePrescriptionHold": "{sets, plural, one{# serija} few{# serije} other{# serija}} × {reps} sek zadržaj · {restSeconds}s odmora",
+  "@programExercisePrescriptionHold": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "reps": {"type": "int"},
+      "restSeconds": {"type": "int"}
+    }
+  },
+  "programCreatorTitle": "KREATOR PROGRAMA",
+  "programCreatorReadyLabel": "SPREMNO ZA TRENING",
+  "programCreatorWeeksBadge": "{count} TJEDANA",
+  "@programCreatorWeeksBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "programCreatorDaysPerWeekBadge": "{count} DANA / TJEDNO",
+  "@programCreatorDaysPerWeekBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "programCreatorSetsPerWeekBadge": "{count} SERIJA / TJEDNO",
+  "@programCreatorSetsPerWeekBadge": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "programCreatorScheduleTitle": "TJEDNI RASPORED",
+  "programCreatorScheduleSubtitle": "Otvori dan da pregledaš propisane vježbe.",
+  "programCreatorRecoveryDayDescription": "Dan oporavka. Odmori se, napuni baterije i pripremi za sljedeći trening.",
+  "programCreatorNoExercisesYet": "Još nema vježbi. Uredi ovaj trening.",
+  "programCreatorEditDayButton": "UREDI {day}",
+  "@programCreatorEditDayButton": {
+    "placeholders": {"day": {"type": "String"}}
+  },
+  "programCreatorInfoTitle": "TVOJ PROGRAM JE SPREMAN",
+  "programCreatorInfoDescription": "Spremi ovaj ogledni program i vrati se na početni pregled. Skica se čuva lokalno samo tijekom ove sesije.",
+  "programCreatorIncompleteWarning": "Dodaj barem jednu vježbu u svaki dan treninga prije spremanja.",
+  "programCreatorSaveButton": "SPREMI PROGRAM",
+  "settingsTitle": "POSTAVKE",
+  "settingsInfoTitle": "IRON PROGRESS · OGLEDNI NAČIN",
+  "settingsInfoDescription": "Programi, zadane vježbe i evidencija treninga koriste lokalne ogledne podatke. Nisu povezani račun ni backend.",
+  "settingsLanguageTitle": "JEZIK",
+  "settingsLanguageSubtitle": "Odaberi na kojem će se jeziku prikazivati tekst u aplikaciji.",
+  "settingsDisplayTitle": "PRIKAZ & JEDINICE",
+  "settingsDisplaySubtitle": "Tamna tema · funte (lbs) · Montserrat / JetBrains Mono",
+  "templateCategoryHypertrophy": "Hipertrofija",
+  "templateCategoryStrength": "Snaga",
+  "templateCategoryVolume": "Volumen",
+  "templatePushPullLegsName": "Push Pull Legs",
+  "templatePushPullLegsDescription": "5 dana visokog intenziteta i frekvencije",
+  "templateUpperLowerName": "Upper Lower",
+  "templateUpperLowerDescription": "4-dnevna baza za čistu snagu",
+  "templateArnoldSplitName": "Arnold Split",
+  "templateArnoldSplitDescription": "6-dnevni antagonistički blast",
+  "templateDayPush": "Push",
+  "templateDayPull": "Pull",
+  "templateDayLegs": "Noge",
+  "templateDayUpper": "Gornji dio",
+  "templateDayLower": "Donji dio",
+  "templateDayChestBack": "Prsa & leđa",
+  "templateDayShouldersArms": "Ramena & ruke",
+  "templateDayArms": "Ruke",
+  "trackerEmptyAppBarTitle": "IRON PULSE",
+  "trackerEmptySystemReadyBadge": "SYS READY",
+  "trackerEmptyNoProgramTitle": "NEMA AKTIVNOG PROGRAMA",
+  "trackerEmptyNoProgramDescription": "Trebaš aktivnu rutinu da bilježiš treninge, pratiš progresivno opterećenje i gradiš mišiće. Odaberi predložak ili sastavi svoj split od nule.",
+  "trackerEmptyCreateProgramButton": "IZRADI PROGRAM TRENINGA",
+  "trackerEmptyPresetTitle": "ILI KRENI OD PREDLOŠKA",
+  "trackerEmptyPresetSubtitle": "3 PROTOKOLA",
+  "trackerEmptyPreviewButton": "PREGLED",
+  "trackerEmptyStartSampleProgramButton": "POKRENI OGLEDNI PROGRAM",
+  "trackerEmptyTemplateDayLabel": "DAN {day}",
+  "@trackerEmptyTemplateDayLabel": {
+    "placeholders": {"day": {"type": "int"}}
+  },
+  "trackerEmptyHowItWorksTitle": "KAKO YRON RADI",
+  "trackerEmptyHowItWorksSubtitle": "Složi sustav treninga koji možeš ponavljati.",
+  "trackerEmptyStepOne": "Postavi tjedni split mišićnih skupina",
+  "trackerEmptyStepTwo": "Dodaj serije i ciljana ponavljanja",
+  "trackerEmptyStepThree": "Bilježi težine i overload",
+  "trackerEmptyFooter": "Ogledni način · programi i evidencija ostaju lokalni samo tijekom ove sesije.",
+  "weekDaysTitle": "ODABERI DAN TRENINGA",
+  "weekDaysSampleSubtitle": "HIPERTROFIJA OVERLOAD 1.0 · TJEDAN {week} ({start} – {end})",
+  "@weekDaysSampleSubtitle": {
+    "placeholders": {
+      "week": {"type": "int"},
+      "start": {"type": "String"},
+      "end": {"type": "String"}
+    }
+  },
+  "weekDaysDescription": "Bilježi serije i uspoređuj ih s prethodnim rezultatima kako bi nastavio napredovati.",
+  "weekDaysProgressSummary": "3 OD 5 ZAVRŠENO · 1 PRESKOČEN",
+  "weekDaysProgressSemanticLabel": "Tjedni napredak treninga",
+  "weekDaysProgressSemanticValue": "60 posto",
+  "weekDaysCompletedMetricsVolume": "4 vježbe · 14.200 KG volumena",
+  "weekDaysCompletedMetricsLogged": "4 vježbe zabilježene",
+  "weekDaysCompletedStatus": "ZAVRŠENO",
+  "weekDaysRecoveryStatus": "OPORAVAK",
+  "weekDaysSkippedStatus": "PRESKOČENO",
+  "weekDaysTodayReadyStatus": "DANAS · SPREMNO",
+  "weekDaysUpcomingStatus": "SLIJEDEĆE",
+  "weekDaysPlannedStatus": "PLANIRANO",
+  "weekDaysRestDescription": "Oporavak je dio plana. Odaberi dan treninga kad budeš spreman za rad.",
+  "weekDaysWorkoutDescription": "Pregledaj vježbe i zabilježi svaku seriju u loggeru treninga.",
+  "weekDaysStartSelectedWorkoutButton": "POKRENI ODABRANI TRENING",
+  "weekDaysBackToProgramButton": "NATRAG NA PROGRAM",
+  "weekDaysProgramFooter": "Raspored treninga iz tvoje lokalne skice programa.",
+  "activeProgramTitle": "TRACKER",
+  "activeProgramSampleBadge": "AKTIVNI PROGRAM · OGLEDNI NAČIN",
+  "activeProgramSampleName": "HIPERTROFIJA FAZA II",
+  "activeProgramSampleDesignerSubtitle": "Dizajn programa · Iron Coaching",
+  "activeProgramCustomDesignerSubtitle": "Dizajn programa · Ti · {focus}",
+  "@activeProgramCustomDesignerSubtitle": {
+    "placeholders": {"focus": {"type": "String"}}
+  },
+  "activeProgramPreviousWeekTooltip": "Prethodni tjedan",
+  "activeProgramNextWeekTooltip": "Sljedeći tjedan",
+  "activeProgramWeekLabel": "TJEDAN {current} OD {total}",
+  "@activeProgramWeekLabel": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "activeProgramTodayTitle": "DANAŠNJI TRENING",
+  "activeProgramTodaySubtitle": "Dan 1 od {count}",
+  "@activeProgramTodaySubtitle": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "activeProgramSampleWorkoutSummary": "4 vježbe · 12 serija · ~60 min",
+  "activeProgramWorkoutSummary": "{exercises} vježbe · {sets} serija",
+  "@activeProgramWorkoutSummary": {
+    "placeholders": {
+      "exercises": {"type": "int"},
+      "sets": {"type": "int"}
+    }
+  },
+  "activeProgramReadyBadge": "SPREMNO",
+  "activeProgramInfoTitle": "PROGRESIVNO OPTEREĆENJE",
+  "activeProgramInfoDescription": "Ciljani RPE 8,5. Pogledaj zadnju sesiju prije dodavanja težine. Primjer napretka: +2,5 lbs.",
+  "activeProgramChooseDayButton": "POGLEDAJ TJEDAN I ODABERI DAN",
+  "activeProgramCreateNewProgramButton": "IZRADI NOVI PROGRAM",
+  "activeWorkoutTitle": "AKTIVNI TRENING",
+  "activeWorkoutSessionBadge": "AKTIVNA SESIJA · LOKALNI UZORAK",
+  "activeWorkoutCompleteOneSetError": "Završi barem jednu seriju da bi mogao završiti trening.",
+  "activeWorkoutFinishDialogTitle": "Završiti ovaj trening?",
+  "activeWorkoutFinishDialogDescription": "Završeno je {completed} od {total} serija. U lokalnoj povijesti prikazat će se samo dovršene serije.",
+  "@activeWorkoutFinishDialogDescription": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "activeWorkoutKeepTrainingButton": "NASTAVI TRENING",
+  "activeWorkoutFinishButton": "ZAVRŠI TRENING",
+  "activeWorkoutDiscardDialogTitle": "Odbaciti trening?",
+  "activeWorkoutDiscardDialogDescription": "Nedovršena ogledna sesija neće biti spremljena.",
+  "activeWorkoutDiscardButton": "ODBACI",
+  "activeWorkoutVolumeLabel": "VOLUMEN",
+  "activeWorkoutSetProgress": "{completed} / {total} serija",
+  "@activeWorkoutSetProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "activeWorkoutRestTimerLabel": "TIMER ODMORA",
+  "activeWorkoutPauseButton": "PAUZA",
+  "activeWorkoutStartButton": "POKRENI",
+  "activeWorkoutInfoTitle": "PROGRESIJA · CILJANI RPE 8,5",
+  "activeWorkoutInfoDescription": "Posljednja ogledna sesija: 9 serija / 10.500 lbs. Ciljaj kontrolirana ponavljanja. Dodaj +2,5 lbs u sljedećoj sesiji samo kad su forma i napor na razini.",
+  "activeWorkoutSessionRpeLabel": "RPE SESIJE",
+  "activeWorkoutExerciseSubtitle": "{sets} serije · {reps} pon. · {restSeconds}s odmora",
+  "@activeWorkoutExerciseSubtitle": {
+    "placeholders": {
+      "sets": {"type": "int"},
+      "reps": {"type": "int"},
+      "restSeconds": {"type": "int"}
+    }
+  },
+  "activeWorkoutSetCompleteLabel": "{exercise} serija {set} završena",
+  "@activeWorkoutSetCompleteLabel": {
+    "placeholders": {
+      "exercise": {"type": "String"},
+      "set": {"type": "int"}
+    }
+  },
+  "activeWorkoutUndoExerciseButton": "PONIŠTI VJEŽBU",
+  "activeWorkoutCompleteExerciseButton": "ZAVRŠI VJEŽBU"
+}

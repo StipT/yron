@@ -22,9 +22,7 @@ Future<void> _openBuilder(WidgetTester tester) async {
 }
 
 Future<void> _startSampleProgram(WidgetTester tester) async {
-  final preview = find.byKey(
-    const ValueKey('template-preview-Push Pull Legs'),
-  );
+  final preview = find.byKey(const ValueKey('template-preview-Push Pull Legs'));
   await _scrollTo(tester, preview);
   await tester.tap(preview);
   await tester.pumpAndSettle();

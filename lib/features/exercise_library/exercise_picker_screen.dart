@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
 import 'exercise_catalog.dart';
 import 'exercise_library_screen.dart';
 
-/// Full-screen modal picker with muscle, equipment and difficulty filters.
 class ExercisePickerScreen extends StatelessWidget {
   const ExercisePickerScreen({
     super.key,
@@ -17,11 +17,13 @@ class ExercisePickerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final catalog = buildExerciseCatalog(l10n);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SELECT EXERCISES'),
+        title: Text(l10n.exercisePickerTitle),
         leading: IconButton(
-          tooltip: 'Cancel exercise selection',
+          tooltip: l10n.exercisePickerCancelTooltip,
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.pop(context),
         ),
@@ -34,12 +36,13 @@ class ExercisePickerScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(YronSpacing.md),
               child: Text(
-                'Add exercises to $dayName',
+                l10n.exercisePickerAddToDay(dayName),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             Expanded(
               child: ExerciseCatalogView(
+                catalog: catalog,
                 unavailableIds: unavailableIds,
                 onDetails: (exercise) => showExerciseDetails(context, exercise),
                 onCancel: () => Navigator.pop(context),
@@ -53,12 +56,13 @@ class ExercisePickerScreen extends StatelessWidget {
   }
 }
 
-/// Keyboard-aware, tablet-width-constrained quick picker.
 Future<List<LibraryExercise>?> showDayExercisePicker(
   BuildContext context, {
   required String dayName,
   Set<String> unavailableIds = const {},
 }) {
+  final l10n = context.l10n;
+  final catalog = buildExerciseCatalog(l10n);
   return showModalBottomSheet<List<LibraryExercise>>(
     context: context,
     isScrollControlled: true,
@@ -76,12 +80,13 @@ Future<List<LibraryExercise>?> showDayExercisePicker(
               Padding(
                 padding: const EdgeInsets.all(YronSpacing.md),
                 child: Text(
-                  'Add Exercises to $dayName',
+                  l10n.exercisePickerAddToDayTitle(dayName),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               Expanded(
                 child: ExerciseCatalogView(
+                  catalog: catalog,
                   showAdvancedFilters: false,
                   unavailableIds: unavailableIds,
                   onDetails: (exercise) =>

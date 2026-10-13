@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
 import '../program_creator/program_draft.dart';
 import 'week_days_screen.dart';
 import 'workout_sample.dart';
@@ -28,15 +29,17 @@ class _ActiveProgramScreenState extends State<ActiveProgramScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final program = widget.program;
     final weeks = program?.weeks ?? 10;
     final firstDay = program?.days.firstWhere((day) => !day.isRest);
+    final firstDaySets = firstDay?.exercises.fold(0, (n, e) => n + e.sets) ?? 0;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TRACKER'),
+        title: Text(l10n.activeProgramTitle),
         actions: [
           IconButton(
-            tooltip: 'Exercise library',
+            tooltip: l10n.commonExerciseLibraryTooltip,
             onPressed: widget.onLibrary,
             icon: const Icon(Icons.menu_book_outlined),
           ),
@@ -50,17 +53,19 @@ class _ActiveProgramScreenState extends State<ActiveProgramScreen> {
             child: ListView(
               padding: const EdgeInsets.all(YronSpacing.md),
               children: [
-                const YronBadge(label: 'ACTIVE PROGRAM · SAMPLE MODE'),
+                YronBadge(label: l10n.activeProgramSampleBadge),
                 const SizedBox(height: YronSpacing.md),
                 Text(
-                  program?.name ?? 'HYPERTROPHY PHASE II',
+                  program?.name ?? l10n.activeProgramSampleName,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: YronSpacing.sm),
                 Text(
                   program == null
-                      ? 'Program designer · Iron Coaching'
-                      : 'Program designer · You · ${program.focus}',
+                      ? l10n.activeProgramSampleDesignerSubtitle
+                      : l10n.activeProgramCustomDesignerSubtitle(
+                          programFocusLabel(l10n, program.focus),
+                        ),
                   style: const TextStyle(color: YronColors.textMuted),
                 ),
                 const SizedBox(height: YronSpacing.lg),
@@ -68,7 +73,7 @@ class _ActiveProgramScreenState extends State<ActiveProgramScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                        tooltip: 'Previous week',
+                        tooltip: l10n.activeProgramPreviousWeekTooltip,
                         onPressed: _week > 1
                             ? () => setState(() => _week--)
                             : null,
@@ -76,13 +81,13 @@ class _ActiveProgramScreenState extends State<ActiveProgramScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          'WEEK $_week OF $weeks',
+                          l10n.activeProgramWeekLabel(_week, weeks),
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       IconButton(
-                        tooltip: 'Next week',
+                        tooltip: l10n.activeProgramNextWeekTooltip,
                         onPressed: _week < weeks
                             ? () => setState(() => _week++)
                             : null,
@@ -93,52 +98,54 @@ class _ActiveProgramScreenState extends State<ActiveProgramScreen> {
                 ),
                 const SizedBox(height: YronSpacing.lg),
                 YronSectionHeader(
-                  title: 'TODAY\'S WORKOUT',
-                  subtitle: 'Day 1 of ${program?.workoutCount ?? 5}',
+                  title: l10n.activeProgramTodayTitle,
+                  subtitle: l10n.activeProgramTodaySubtitle(
+                    program?.workoutCount ?? 5,
+                  ),
                 ),
                 const SizedBox(height: YronSpacing.md),
                 YronWorkoutRow(
                   title: firstDay == null
-                      ? 'Monday: Chest & Triceps'
-                      : '${firstDay.name}: ${firstDay.title}',
+                      ? '${l10n.dayMonday}: ${l10n.workoutTitleChestTriceps}'
+                      : '${firstDay.name(l10n)}: ${firstDay.titleText(l10n)}',
                   summary: firstDay == null
-                      ? '4 exercises · 12 sets · ~60 min'
-                      : '${firstDay.exercises.length} exercises · '
-                            '${firstDay.exercises.fold(0, (n, e) => n + e.sets)} sets',
-                  status: const YronBadge(label: 'READY'),
+                      ? l10n.activeProgramSampleWorkoutSummary
+                      : l10n.activeProgramWorkoutSummary(
+                          firstDay.exercises.length,
+                          firstDaySets,
+                        ),
+                  status: YronBadge(label: l10n.activeProgramReadyBadge),
                   onTap: () => _openWeek(context),
                 ),
                 const SizedBox(height: YronSpacing.md),
-                const YronInfoCard(
+                YronInfoCard(
                   icon: Icons.trending_up,
-                  title: 'PROGRESSIVE OVERLOAD',
-                  description:
-                      'Target RPE 8.5. Review your last session before '
-                      'adding load. Sample progression: +2.5 lbs.',
+                  title: l10n.activeProgramInfoTitle,
+                  description: l10n.activeProgramInfoDescription,
                 ),
                 const SizedBox(height: YronSpacing.lg),
                 YronButton(
                   key: const ValueKey('start-workout'),
-                  label: 'START WORKOUT',
+                  label: l10n.commonStartWorkout,
                   icon: Icons.play_arrow,
                   expand: true,
                   onPressed: () => widget.onStartWorkout(
                     firstDay == null
-                        ? WorkoutSample.forSampleDay(0)
-                        : WorkoutSample.fromDay(firstDay),
+                        ? WorkoutSample.forSampleDay(0, l10n)
+                        : WorkoutSample.fromDay(firstDay, l10n),
                   ),
                 ),
                 const SizedBox(height: YronSpacing.sm),
                 YronButton(
                   key: const ValueKey('choose-workout-day'),
-                  label: 'VIEW WEEK & CHOOSE DAY',
+                  label: l10n.activeProgramChooseDayButton,
                   variant: YronButtonVariant.secondary,
                   expand: true,
                   onPressed: () => _openWeek(context),
                 ),
                 const SizedBox(height: YronSpacing.sm),
                 YronButton(
-                  label: 'CREATE NEW PROGRAM',
+                  label: l10n.activeProgramCreateNewProgramButton,
                   variant: YronButtonVariant.quiet,
                   onPressed: widget.onCreateProgram,
                 ),

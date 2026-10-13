@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/l10n.dart';
 import 'day_builder_screen.dart';
 import 'program_draft.dart';
 
@@ -37,9 +38,10 @@ class _WeeklySplitScreenState extends State<WeeklySplitScreen> {
   @override
   Widget build(BuildContext context) {
     final draft = widget.draft;
+    final l10n = context.l10n;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('CREATE PROGRAM')),
+      appBar: AppBar(title: Text(l10n.createProgramTitle)),
       body: SafeArea(
         top: false,
         child: Center(
@@ -49,32 +51,38 @@ class _WeeklySplitScreenState extends State<WeeklySplitScreen> {
               padding: const EdgeInsets.all(YronSpacing.md),
               children: [
                 YronStepIndicator(
-                  labels: const ['SETUP', 'WEEKLY SPLIT', 'BUILD'],
+                  labels: localizedStepLabels(l10n),
                   currentIndex: 1,
                 ),
                 const SizedBox(height: YronSpacing.lg),
                 Text(
-                  'PHASE 02 / STRUCTURE',
+                  l10n.weeklySplitPhaseLabel,
                   style: textTheme.labelSmall?.copyWith(
                     color: YronColors.primary,
                   ),
                 ),
                 const SizedBox(height: YronSpacing.sm),
-                Text('2. WEEKLY SPLIT', style: textTheme.headlineMedium),
+                Text(
+                  l10n.weeklySplitScreenTitle,
+                  style: textTheme.headlineMedium,
+                ),
                 const SizedBox(height: YronSpacing.sm),
                 Text(
-                  '${draft.name} · ${draft.focus} · ${draft.weeks} weeks',
+                  l10n.weeklySplitSummary(
+                    draft.name,
+                    programFocusLabel(l10n, draft.focus),
+                    draft.weeks,
+                  ),
                   style: textTheme.bodySmall,
                 ),
                 const SizedBox(height: YronSpacing.md),
-                const Text(
-                  'Choose workout and recovery days. Edit a workout to '
-                  'build its exercise prescription.',
-                ),
+                Text(l10n.weeklySplitDescription),
                 const SizedBox(height: YronSpacing.lg),
                 YronSectionLabel(
-                  label: 'WEEKLY SCHEDULE',
-                  trailing: '${draft.workoutCount} WORKOUT DAYS',
+                  label: l10n.weeklySplitScheduleLabel,
+                  trailing: l10n.weeklySplitWorkoutDaysBadge(
+                    draft.workoutCount,
+                  ),
                 ),
                 const SizedBox(height: YronSpacing.md),
                 for (final (index, day) in draft.days.indexed)
@@ -86,11 +94,13 @@ class _WeeklySplitScreenState extends State<WeeklySplitScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           YronSectionHeader(
-                            title: day.name.toUpperCase(),
-                            subtitle: day.displayTitle,
+                            title: day.name(l10n).toUpperCase(),
+                            subtitle: day.displayTitle(l10n),
                             action: IconButton(
                               key: ValueKey('edit-day-$index'),
-                              tooltip: 'Edit ${day.name}',
+                              tooltip: l10n.weeklySplitEditDayTooltip(
+                                day.name(l10n),
+                              ),
                               icon: const Icon(Icons.edit_outlined),
                               onPressed: () =>
                                   _openBuilder(index, returnToSplit: true),
@@ -103,18 +113,14 @@ class _WeeklySplitScreenState extends State<WeeklySplitScreen> {
                             children: [
                               YronChoiceChip(
                                 key: ValueKey('workout-day-$index'),
-                                label: 'WORKOUT',
+                                label: l10n.commonWorkout,
                                 selected: !day.isRest,
-                                onPressed: () => setState(() {
-                                  day.isRest = false;
-                                  if (day.title == 'Rest') {
-                                    day.title = 'Full Body';
-                                  }
-                                }),
+                                onPressed: () =>
+                                    setState(day.activateWorkoutDefault),
                               ),
                               YronChoiceChip(
                                 key: ValueKey('rest-day-$index'),
-                                label: 'REST',
+                                label: l10n.commonRest,
                                 selected: day.isRest,
                                 onPressed: () =>
                                     setState(() => day.isRest = true),
@@ -126,13 +132,10 @@ class _WeeklySplitScreenState extends State<WeeklySplitScreen> {
                     ),
                   ),
                 const SizedBox(height: YronSpacing.md),
-                const YronInfoCard(
+                YronInfoCard(
                   icon: Icons.repeat,
-                  title: 'YOUR REPEATING MICROCYCLE',
-                  description:
-                      'This seven-day schedule repeats for every '
-                      'week of your program. Rest days preserve their '
-                      'exercises if you switch them back to a workout.',
+                  title: l10n.weeklySplitInfoTitle,
+                  description: l10n.weeklySplitInfoDescription,
                 ),
               ],
             ),
@@ -146,7 +149,7 @@ class _WeeklySplitScreenState extends State<WeeklySplitScreen> {
           child: YronButton(
             key: const ValueKey('split-next'),
             expand: true,
-            label: 'CONTINUE: BUILD WORKOUTS',
+            label: l10n.weeklySplitNextButton,
             icon: Icons.arrow_forward,
             onPressed: draft.workoutCount == 0
                 ? null

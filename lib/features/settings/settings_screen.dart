@@ -1,44 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:yron_ui/yron_ui.dart';
 
+import '../../l10n/gen/app_localizations.dart';
+import '../../l10n/l10n.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
     super.key,
     required this.onLibrary,
     required this.onCreateProgram,
+    required this.selectedLocale,
+    required this.onLocaleChanged,
   });
 
   final VoidCallback onLibrary;
   final VoidCallback onCreateProgram;
+  final Locale selectedLocale;
+  final ValueChanged<Locale> onLocaleChanged;
+
+  String _localeLabel(AppLocalizations l10n, Locale locale) =>
+      switch (locale.languageCode) {
+        'de' => l10n.localeGerman,
+        'hr' => l10n.localeCroatian,
+        _ => l10n.localeEnglish,
+      };
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final supportedLocales = AppLocalizations.supportedLocales;
     return Scaffold(
-      appBar: AppBar(title: const Text('SETTINGS')),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(YronSpacing.md),
           children: [
-            const YronInfoCard(
+            YronInfoCard(
               icon: Icons.info_outline,
-              title: 'IRON PROGRESS · SAMPLE MODE',
-              description:
-                  'Programs, exercise prescriptions and workout logs use '
-                  'local sample data. No account or backend is connected.',
+              title: l10n.settingsInfoTitle,
+              description: l10n.settingsInfoDescription,
             ),
             const SizedBox(height: YronSpacing.lg),
             YronButton(
-              label: 'EXERCISE LIBRARY',
+              label: l10n.commonExerciseLibrary,
               variant: YronButtonVariant.secondary,
               onPressed: onLibrary,
             ),
             const SizedBox(height: YronSpacing.md),
-            YronButton(label: 'CREATE PROGRAM', onPressed: onCreateProgram),
+            YronButton(
+              label: l10n.commonCreateProgram,
+              onPressed: onCreateProgram,
+            ),
+            if (supportedLocales.length > 1) ...[
+              const SizedBox(height: YronSpacing.lg),
+              YronSectionHeader(
+                title: l10n.settingsLanguageTitle,
+                subtitle: l10n.settingsLanguageSubtitle,
+              ),
+              const SizedBox(height: YronSpacing.md),
+              Wrap(
+                spacing: YronSpacing.sm,
+                runSpacing: YronSpacing.sm,
+                children: [
+                  for (final locale in supportedLocales)
+                    YronChoiceChip(
+                      label: _localeLabel(l10n, locale),
+                      selected:
+                          locale.languageCode == selectedLocale.languageCode,
+                      onPressed: () => onLocaleChanged(locale),
+                    ),
+                ],
+              ),
+            ],
             const SizedBox(height: YronSpacing.lg),
-            const YronSectionHeader(
-              title: 'DISPLAY & UNITS',
-              subtitle:
-                  'Dark theme · pounds (lbs) · Montserrat / JetBrains Mono',
+            YronSectionHeader(
+              title: l10n.settingsDisplayTitle,
+              subtitle: l10n.settingsDisplaySubtitle,
             ),
           ],
         ),
